@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources for the Homeless</title>
+
+    <!-- Google's Roboto font -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #212121;
+        }
+
+        header {
+            padding: 20px 40px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 20px 0;
+            background-color: #f5f5f5;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #757575;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #e0e0e0;
+        }
+
+        section {
+            padding: 40px;
+        }
+
+        button {
+            background-color: #1a73e8;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background-color: #155dc4;
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 4px;
+            width: 60%;
+            border: 1px solid #e0e0e0;
+            color: #212121;
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Hornet Homeless Resource Platform</h1>
+        <p>Connecting you with essential resources and support services.</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#" onclick="searchShelters()">Shelters</a></li>
+            <li><a href="#food-banks" onclick="searchFoodBanks()">Food Banks</a></li>
+            <li><a href="#" onclick="searchHealthcare()">Healthcare</a></li>
+            <li><a href="#" onclick="searchEmploymentResources()">Employment Resources</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2>Search for Resources</h2>
+        <p>Enter your location to find resources near you:</p>
+        <input type="text" id="address-input" placeholder="Enter city or zip code">
+        <button onclick="geocodeAddress()">Search</button>
+        <div id="map"></div>
+    </section>
+
+    <!-- Include the Google Maps API at the bottom to ensure page has loaded before scripts execute -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMKPRb0FSD1oA91I0TNO7AZNcz3k69DkI&libraries=places&callback=initMap" async defer></script>
+
+    <script>
+        let map;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 8
+            });
+        }
+    
+        function geocodeAddress() {
+            const geocoder = new google.maps.Geocoder();
+            const address = document.getElementById('address-input').value;
+            geocoder.geocode({ 'address': address }, function(results, status) {
+                if (status == 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+    // added functionality for homeless shelters
+function searchShelters() {
+    const service = new google.maps.places.PlacesService(map);
+    const userLocation = map.getCenter();
+
+    service.nearbySearch({
+        location: userLocation,
+        radius: '5000',
+        keyword: 'homeless shelter',
+    }, callback);
+
+    function callback(results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            for (let i = 0; i < results.length; i++) {
+                createMarker(results[i]);
+            }
+        }
+    }
+
+    function createMarker(place) {
+        const marker = new google.maps.Marker({
+            map: map,
+            position: place.geometry.location
+        });
+
+        const infowindow = new google.maps.InfoWindow();
+
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.setContent(place.name);
+            infowindow.open(map, this);
+        });
+    }
+}
+
+    
+        // Added functionality for Food Banks
+        function searchFoodBanks() {
+            const service = new google.maps.places.PlacesService(map);
+            const userLocation = map.getCenter();
+            const infowindow = new google.maps.InfoWindow();
+    
+            service.nearbySearch({
+                location: userLocation,
+                radius: '5000',
+                keyword: 'food bank'
+            }, callback);
+    
+            function callback(results, status) {
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    for (let i = 0; i < results.length; i++) {
+                        createMarker(results[i]);
+                    }
+                }
+            }
+    
+            function createMarker(place) {
+                const marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location
+                });
+    
+                google.maps.event.addListener(marker, 'click', function() {
+                    infowindow.setContent(place.name);
+                    infowindow.open(map, this);
+                });
+            }
+        }
+        // add functionality for Healthcare
+        function searchHealthcare() {
+            const service = new google.maps.places.PlacesService(map);
+            const userLocation = map.getCenter();
+            const infowindow = new google.maps.InfoWindow();
+    
+            service.nearbySearch({
+                location: userLocation,
+                radius: '5000',
+                keyword: 'free clinic'
+            }, callback);
+    
+            function callback(results, status) {
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    for (let i = 0; i < results.length; i++) {
+                        createMarker(results[i]);
+                    }
+                }
+            }
+    
+            function createMarker(place) {
+                const marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location
+                });
+    
+                google.maps.event.addListener(marker, 'click', function() {
+                    infowindow.setContent(place.name);
+                    infowindow.open(map, this);
+                });
+            }
+        }
+        // added functionality to Employment Resources
+        function searchEmploymentResources() {
+            const service = new google.maps.places.PlacesService(map);
+            const userLocation = map.getCenter();
+            const infowindow = new google.maps.InfoWindow();
+        
+            service.nearbySearch({
+                location: userLocation,
+                radius: '5000',
+                keyword: '"employment agency" "job center" "workforce center"'
+            }, callback);
+        
+            function callback(results, status) {
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    for (let i = 0; i < results.length; i++) {
+                        createMarker(results[i]);
+                    }
+                }
+            }
+        
+            function createMarker(place) {
+                const marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location
+                });
+        
+                google.maps.event.addListener(marker, 'click', function() {
+                    infowindow.setContent(place.name);
+                    infowindow.open(map, this);
+                });
+            }
+        }
+        
+    
+    </script>
+</body>
+
+</html>
