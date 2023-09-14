@@ -109,12 +109,14 @@
         <input type="text" id="address-input" placeholder="Enter city or zip code">
         <button onclick="geocodeAddress()">Search</button>
         <div id="map"></div>
+        <button onclick="clearMarkers()">Clear Markers</button>
     </section>
 
     <!-- Include the Google Maps API at the bottom to ensure page has loaded before scripts execute -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places&callback=initMap" async defer></script>
 
     <script>
+        let markers = [];
         let map;
 
         function initMap() {
@@ -139,136 +141,61 @@
                 }
             });
         }
-    // added functionality for homeless shelters
-function searchShelters() {
-    const service = new google.maps.places.PlacesService(map);
-    const userLocation = map.getCenter();
+        function searchResources(keyword) {
+            const service = new google.maps.places.PlacesService(map);
+            const userLocation = map.getCenter();
+            const infowindow = new google.maps.InfoWindow();
 
-    service.nearbySearch({
-        location: userLocation,
-        radius: '5000',
-        keyword: 'homeless shelter',
-    }, callback);
+            service.nearbySearch({
+                location: userLocation,
+                radius: '5000',
+                keyword: keyword
+            }, callback);
 
-    function callback(results, status) {
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-            for (let i = 0; i < results.length; i++) {
-                createMarker(results[i]);
+            function callback(results, status) {
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    for (let i = 0; i < results.length; i++) {
+                        createMarker(results[i]);
+                    }
+                }
+            }
+
+            function createMarker(place) {
+                const marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location
+                });
+                markers.push(marker);
+
+                google.maps.event.addListener(marker, 'click', function() {
+                    infowindow.setContent(place.name);
+                    infowindow.open(map, this);
+                });
             }
         }
-    }
 
-    function createMarker(place) {
-        const marker = new google.maps.Marker({
-            map: map,
-            position: place.geometry.location
-        });
+        function clearMarkers() {
+            for(let i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            markers = [];
+        }
+        
 
-        const infowindow = new google.maps.InfoWindow();
+        function searchShelters() {
+            searchResources('homeless shelter');
+        }
 
-        google.maps.event.addListener(marker, 'click', function() {
-            infowindow.setContent(place.name);
-            infowindow.open(map, this);
-        });
-    }
-}
-
-    
-        // Added functionality for Food Banks
         function searchFoodBanks() {
-            const service = new google.maps.places.PlacesService(map);
-            const userLocation = map.getCenter();
-            const infowindow = new google.maps.InfoWindow();
-    
-            service.nearbySearch({
-                location: userLocation,
-                radius: '5000',
-                keyword: 'food bank'
-            }, callback);
-    
-            function callback(results, status) {
-                if (status == google.maps.places.PlacesServiceStatus.OK) {
-                    for (let i = 0; i < results.length; i++) {
-                        createMarker(results[i]);
-                    }
-                }
-            }
-    
-            function createMarker(place) {
-                const marker = new google.maps.Marker({
-                    map: map,
-                    position: place.geometry.location
-                });
-    
-                google.maps.event.addListener(marker, 'click', function() {
-                    infowindow.setContent(place.name);
-                    infowindow.open(map, this);
-                });
-            }
+            searchResources('food bank');
         }
-        // add functionality for Healthcare
+
         function searchHealthcare() {
-            const service = new google.maps.places.PlacesService(map);
-            const userLocation = map.getCenter();
-            const infowindow = new google.maps.InfoWindow();
-    
-            service.nearbySearch({
-                location: userLocation,
-                radius: '5000',
-                keyword: 'free clinic'
-            }, callback);
-    
-            function callback(results, status) {
-                if (status == google.maps.places.PlacesServiceStatus.OK) {
-                    for (let i = 0; i < results.length; i++) {
-                        createMarker(results[i]);
-                    }
-                }
-            }
-    
-            function createMarker(place) {
-                const marker = new google.maps.Marker({
-                    map: map,
-                    position: place.geometry.location
-                });
-    
-                google.maps.event.addListener(marker, 'click', function() {
-                    infowindow.setContent(place.name);
-                    infowindow.open(map, this);
-                });
-            }
+            searchResources('free clinic');
         }
-        // added functionality to Employment Resources
+
         function searchEmploymentResources() {
-            const service = new google.maps.places.PlacesService(map);
-            const userLocation = map.getCenter();
-            const infowindow = new google.maps.InfoWindow();
-        
-            service.nearbySearch({
-                location: userLocation,
-                radius: '5000',
-                keyword: '"employment agency" "job center" "workforce center"'
-            }, callback);
-        
-            function callback(results, status) {
-                if (status == google.maps.places.PlacesServiceStatus.OK) {
-                    for (let i = 0; i < results.length; i++) {
-                        createMarker(results[i]);
-                    }
-                }
-            }
-        
-            function createMarker(place) {
-                const marker = new google.maps.Marker({
-                    map: map,
-                    position: place.geometry.location
-                });
-        
-                google.maps.event.addListener(marker, 'click', function() {
-                    infowindow.setContent(place.name);
-                    infowindow.open(map, this);
-                });
-            }
+            searchResources('"employment agency" "job center" "workforce center"');
         }
         
     
