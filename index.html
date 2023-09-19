@@ -85,6 +85,33 @@
             margin-right: 10px;
         }
 
+        #cards-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+        
+        .card {
+            flex: 0 0 auto;
+            width: calc(33% - 10px);
+            padding: 15px;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            background-color: #f5f5f5;
+            transition: transform 0.3s;
+            margin-right: 10px; /* Spacing between cards */
+        }
+        
+        .card:last-child {
+            margin-right: 0;
+        }
+        
+        .card:hover {
+            transform: scale(1.05);
+        }
+        
+
     </style>
 </head>
 
@@ -109,6 +136,15 @@
         <input type="text" id="address-input" placeholder="Enter city or zip code">
         <button onclick="geocodeAddress()">Search</button>
         <div id="map"></div>
+        <button onclick="clearMarkers()">Clear Markers</button>
+        
+        <!-- card section -->
+        <div id="cards-container">
+            <div class="card" id="card1"></div>
+            <div class="card" id="card2"></div>
+            <div class="card" id="card3"></div>
+        </div>
+        
         <button onclick="clearMarkers()">Clear Markers</button>
     </section>
 
@@ -156,9 +192,16 @@
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
                     for (let i = 0; i < results.length; i++) {
                         createMarker(results[i]);
+                        if(i < 3) { // For the top 3 places
+                            document.getElementById(`card${i+1}`).innerHTML = `
+                                <h3>${results[i].name}</h3>
+                                <p>${results[i].vicinity}</p>
+                            `;
+                        }
                     }
                 }
             }
+            
 
             function createMarker(place) {
                 const marker = new google.maps.Marker({
