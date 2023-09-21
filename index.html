@@ -16,45 +16,62 @@
             padding: 0;
             background-color: #fff;
             color: #212121;
-        }
+            background-color: transparent; /* So that the #main-background can show through */
 
+        }
+        #main-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1; /* Ensure it sits below all other elements */
+            background-image: url('https://media.cntraveler.com/photos/641366bd693167e7802a8bf2/16:9/w_960,c_limit/Redwood%20National%20Park_GettyImages-1079164438.jpg');
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        
         header {
             padding: 20px 40px;
             text-align: center;
             border-bottom: 1px solid #e0e0e0;
+            background-color: #E0B64D; /* CSUS Gold */
+            color: white; /* Text contrast for gold background */
         }
-
+        
         nav ul {
             display: flex;
             justify-content: center;
             list-style-type: none;
             padding: 20px 0;
-            background-color: #f5f5f5;
+            background-color: #00563B; /* CSUS Green */
         }
-
+        
         nav ul li {
             margin: 0 15px;
         }
-
+        
         nav a {
             text-decoration: none;
-            color: #757575;
+            color: #E0B64D; /* CSUS Gold on green background for hyperlinks */
             font-weight: 500;
             padding: 5px 10px;
             border-radius: 4px;
             transition: background-color 0.3s;
         }
-
+        
         nav a:hover {
-            background-color: #e0e0e0;
+            background-color: #E0B64D; /* CSUS Gold */
+            color: white; /* Text contrast on hover */
         }
-
+        
         section {
             padding: 40px;
         }
-
+        
         button {
-            background-color: #1a73e8;
+            background-color: #1a73e8; /* Google Blue */
             border: none;
             padding: 10px 20px;
             border-radius: 4px;
@@ -63,11 +80,11 @@
             color: #ffffff;
             font-weight: 500;
         }
-
+        
         button:hover {
-            background-color: #155dc4;
+            background-color: #155dc4; /* Darker shade for hover */
         }
-
+        
         #map {
             height: 400px;
             width: 100%;
@@ -75,7 +92,7 @@
             border-radius: 8px;
             box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
         }
-
+        
         input[type="text"] {
             padding: 10px;
             border-radius: 4px;
@@ -84,6 +101,9 @@
             color: #212121;
             margin-right: 10px;
         }
+        
+        /* ... rest of the CSS for the card and card container ... */
+        
 
         #cards-container {
             display: flex;
@@ -116,17 +136,19 @@
 </head>
 
 <body>
+    <body>
+        <div id="main-background"></div>    
     <header>
-        <h1>Hornet Homeless Resource Platform</h1>
+        <h1><a href="#" onclick="showSection('template-section')" style="color: white; text-decoration: none;">Hornet Homeless Resource Platform</a></h1>
         <p>Connecting you with essential resources and support services.</p>
     </header>
 
     <nav>
         <ul>
-            <li><a href="#" onclick="searchShelters()">Shelters</a></li>
-            <li><a href="#food-banks" onclick="searchFoodBanks()">Food Banks</a></li>
-            <li><a href="#" onclick="searchHealthcare()">Healthcare</a></li>
-            <li><a href="#" onclick="searchEmploymentResources()">Employment Resources</a></li>
+            <li><a href="#" onclick="showSection('shelters-section'); searchShelters();">Shelters</a></li>
+            <li><a href="#" onclick="showSection('food-banks-section'); searchFoodBanks();">Food Banks</a></li>
+            <li><a href="#" onclick="showSection('healthcare-section'); searchHealthcare();">Healthcare</a></li>
+            <li><a href="#" onclick="showSection('employment-resources-section'); searchEmploymentResources();">Employment Resources</a></li>
         </ul>
     </nav>
 
@@ -145,13 +167,20 @@
             <div class="card" id="card3"></div>
         </div>
         
-        <button onclick="clearMarkers()">Clear Markers</button>
     </section>
+    <!-- Dynamic Content Sections -->
+    <section id="shelters-section" style="display: none;"></section>
+    <section id="food-banks-section" style="display: none;"></section>
+    <section id="healthcare-section" style="display: none;"></section>
+    <section id="employment-resources-section" style="display: none;"></section>
+    <section id="template-section" style="display: none;"></section>
+
 
     <!-- Google Maps API at the bottom to ensure page is loaded before functions execute -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places&callback=initMap" async defer></script>
 
     <script>
+        let isMapInitialized = false;
         let markers = [];
         let map;
 
@@ -240,6 +269,52 @@
         function searchEmploymentResources() {
             searchResources('"employment agency" "job center" "workforce center"');
         }
+
+        function showSection(sectionId) {
+            // Default to template-section if no sectionId provided
+            sectionId = sectionId || 'template-section';
+
+            // Hide all sections
+            const sections = document.querySelectorAll('section');
+            sections.forEach(sec => sec.style.display = 'none');
+
+            // Display the selected section
+            document.getElementById(sectionId).style.display = 'block';
+            if (sectionId !== 'template-section' && !isMapInitialized) {
+                initMap();
+                isMapInitialized = true;  // Set the flag so map won't be re-initialized
+            }
+            
+        
+        }
+
+        function generateMainContent() {
+            return `
+                <h2>Search for Resources</h2>
+                <p>Enter your location to find resources near you:</p>
+                <input type="text" id="address-input" placeholder="Enter city or zip code">
+                <button onclick="geocodeAddress()">Search</button>
+                <div id="map"></div>
+                <button onclick="clearMarkers()">Clear Markers</button>
+                
+                <!-- card section -->
+                <div id="cards-container">
+                    <div class="card" id="card1"></div>
+                    <div class="card" id="card2"></div>
+                    <div class="card" id="card3"></div>
+                </div>
+            `;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const sections = ["shelters-section", "food-banks-section", "healthcare-section", "employment-resources-section"];
+            sections.forEach(sectionId => {
+                document.getElementById(sectionId).innerHTML = generateMainContent();
+            });
+
+            // Initialize with the default template section
+            showSection();
+        });
         
     
     </script>
