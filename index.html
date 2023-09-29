@@ -139,6 +139,7 @@
     <body>
         <div id="main-background"></div>    
     <header>
+        <!-- enables users to click on main header to go to main page, the community bulletin -->
         <h1><a href="#" onclick="loadPage('default'); return false;">Hornet Homeless Resource Platform</a></h1>
         <p>Connecting you with essential resources and support services.</p>
     </header>
@@ -172,10 +173,11 @@
     <!-- Google Maps API at the bottom to ensure page is loaded before everything executes -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places&callback=initMap" async defer></script>
 
+    <!-- JavaScript code -->
     <script>
         let markers = [];
         let map;
-        // Set the default section to search for
+        // this will intitiate the map right on Sacramento just as a starting point
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: 38.581, lng: -121.494 },
@@ -203,6 +205,7 @@
         function searchResources(keyword) {
             const service = new google.maps.places.PlacesService(map);
             const userLocation = map.getCenter();
+            // Create info window when a marker is clicked
             const infowindow = new google.maps.InfoWindow();
 
             service.nearbySearch({
@@ -217,7 +220,7 @@
         
                     for (let i = 0; i < results.length; i++) {
                         createMarker(results[i]);
-                        if (i < 3) {  // top 3 places populate by name and address, should add phone number
+                        if (i < 3) {  // top 3 places populate by name and address, add phone number later?
                             document.getElementById(`card${i + 1}`).innerHTML = `
                                 <h3>${results[i].name}</h3>
                                 <p>${results[i].vicinity}</p>
@@ -247,7 +250,7 @@
             }
             markers = [];
         }
-        // Set the active section to search for, keywords set the scope of the search
+        // Set the active section to search for, keywords in the '' tell the api what to search for
         function searchShelters() {
             activeSection = 'homeless shelter';
         }
