@@ -131,6 +131,16 @@
             transform: scale(1.05);
         }
         
+        #main-header-link {
+            text-decoration: none; /* Removes underline */
+            color: white; /* Sets text color to white */
+        }
+        
+        #main-header-link:hover {
+            color: white; /* Keeps text color white even on hover */
+        }
+        
+        
 
     </style>
 </head>
@@ -140,7 +150,7 @@
         <div id="main-background"></div>    
     <header>
         <!-- enables users to click on main header to go to main page, the community bulletin -->
-        <h1><a href="#" onclick="loadPage('default'); return false;">Hornet Homeless Resource Platform</a></h1>
+        <h1><a id="main-header-link" href="#" onclick="loadPage('default'); return false;">Hornet Homeless Resource Platform</a></h1>
         <p>Connecting you with essential resources and support services.</p>
     </header>
 
