@@ -463,18 +463,27 @@
             const eventLocation = document.getElementById('event-location').value;
             const eventDescription = document.getElementById('event-description').value;
         
+            // Create a JSON object
+            const eventData = {
+                eventName: eventName,
+                eventDate: eventDate,
+                eventLocation: eventLocation,
+                eventDescription: eventDescription
+            };
+        
             // Send data to Google Sheets
             fetch('https://script.google.com/macros/s/AKfycbwa4fEGN303s9sIKTCIcas6dtGd4-RgIonlc94P3kBIBS8CZ6ocaGlyACcRbBYxLbsl/exec', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'application/json',
                 },
-                body: `eventName=${eventName}&eventDate=${eventDate}&eventLocation=${eventLocation}&eventDescription=${eventDescription}`,
+                body: JSON.stringify(eventData),  // Convert the JSON object to a string
             })
             .then(response => response.json())
             .then(data => console.log(data))
             .catch((error) => console.error('Error:', error));
         }
+        
 
         // Load the default page
         document.addEventListener("DOMContentLoaded", function() {
