@@ -462,33 +462,6 @@
             const eventDate = document.getElementById('event-date').value;
             const eventLocation = document.getElementById('event-location').value;
             const eventDescription = document.getElementById('event-description').value;
-
-            // Create new event card
-            const eventCard = document.createElement('div');
-            eventCard.className = 'event-card';
-            eventCard.innerHTML = `
-                <h3>${eventName}</h3>
-                <p>Date: ${eventDate}</p>
-                <p>Location: ${eventLocation}</p>
-                <p>${eventDescription}</p>
-            `;
-
-            // Append new event card to display
-            document.getElementById('events-display').appendChild(eventCard);
-
-            // Clear the form
-            document.getElementById('event-name').value = '';
-            document.getElementById('event-date').value = '';
-            document.getElementById('event-location').value = '';
-            document.getElementById('event-description').value = '';
-        }
-
-        function submitEvent() {
-            // Get form values
-            const eventName = document.getElementById('event-name').value;
-            const eventDate = document.getElementById('event-date').value;
-            const eventLocation = document.getElementById('event-location').value;
-            const eventDescription = document.getElementById('event-description').value;
         
             // Send data to Google Sheets
             fetch('https://script.google.com/macros/s/AKfycbwqG0-koyBqJbUWOeM8ftnC4UhQsZe7gJ7YAWhhriq2rbQcmNeOLBZcm8bwkbBJ3gRx/exec', {
