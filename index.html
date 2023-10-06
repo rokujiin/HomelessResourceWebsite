@@ -472,17 +472,19 @@
             };
         
             // Send data to Google Sheets
-            fetch('https://us-west2-divine-clone-398400.cloudfunctions.net/function-1', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(eventData),  // Convert the JSON object to a string
-            })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch((error) => console.error('Error:', error));
+        fetch('https://us-west2-divine-clone-398400.cloudfunctions.net/function-1', {
+            method: 'POST',
+            mode: 'cors',  // ensure force cors mode
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(eventData),  // Convert the JSON object to a string
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch((error) => console.error('Error:', error));
         }
+
         
 
         // Load the default page
