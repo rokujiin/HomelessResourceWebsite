@@ -478,8 +478,8 @@
                 eventDescription: eventDescription
             };
         
-            // Send data to Google Sheets
-            fetch('https://script.google.com/macros/s/AKfycbwa4fEGN303s9sIKTCIcas6dtGd4-RgIonlc94P3kBIBS8CZ6ocaGlyACcRbBYxLbsl/exec', {
+            // Send data to GCF (which will then forward to Google Sheets)
+            fetch('<YOUR-GCF-URL>', {  // Replace <YOUR-GCF-URL> with the actual URL of your deployed GCF
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -490,6 +490,7 @@
             .then(data => console.log(data))
             .catch((error) => console.error('Error:', error));
         }
+
         
 
         // Load the default page
