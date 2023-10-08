@@ -197,7 +197,6 @@
 </head>
 
 <body>
-    <body>
         <div id="main-background"></div>    
     <header>
         <!-- enables users to click on main header to go to main page, the community bulletin -->
@@ -233,7 +232,7 @@
 
 
     <!-- Google Maps API at the bottom to ensure page is loaded before everything executes -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places" async defer></script>
 
     <!-- JavaScript code -->
     <script>
@@ -368,8 +367,10 @@
                             <div class="card" id="card3"></div>
                         </div>
                     `;
-                    initMap();
-                    searchShelters();
+                    setTimeout(() => {
+                        initMap();
+                        searchShelters();
+                    }, 0);
                     break;
         
                 case 'food-banks':
@@ -387,8 +388,10 @@
                             <div class="card" id="card3"></div>
                         </div>
                     `;
-                    initMap();
-                    searchFoodBanks();
+                    setTimeout(() => {
+                        initMap();
+                        searchFoodBanks();
+                    }, 0);
                     break;
         
                 case 'healthcare':
@@ -406,9 +409,11 @@
                             <div class="card" id="card3"></div>
                         </div>
                     `;
-                    initMap();
-                    searchHealthcare();
-                    break;
+                    setTimeout(() => {
+                        initMap();
+                        searchHealthcare();
+                    }, 0);
+                    break
         
                 case 'employment-resources':
                     section.innerHTML = `
@@ -425,8 +430,10 @@
                             <div class="card" id="card3"></div>
                         </div>
                     `;
-                    initMap();
-                    searchEmploymentResources();
+                    setTimeout(() => {
+                        initMap();
+                        searchEmploymentResources();
+                    }, 0);
                     break;
         
                 default:
@@ -472,19 +479,17 @@
             };
         
             // Send data to Google Sheets
-        fetch('https://us-west2-divine-clone-398400.cloudfunctions.net/function-1', {
-            method: 'POST',
-            mode: 'cors',  // ensure force cors mode
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(eventData),  // Convert the JSON object to a string
-        })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch((error) => console.error('Error:', error));
+            fetch('https://script.google.com/macros/s/AKfycbwa4fEGN303s9sIKTCIcas6dtGd4-RgIonlc94P3kBIBS8CZ6ocaGlyACcRbBYxLbsl/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(eventData),  // Convert the JSON object to a string
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch((error) => console.error('Error:', error));
         }
-
         
 
         // Load the default page
