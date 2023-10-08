@@ -479,7 +479,7 @@
             };
         
             // Send data to GCF (which will then forward to Google Sheets)
-            fetch('<YOUR-GCF-URL>', {  // Replace <YOUR-GCF-URL> with the actual URL of your deployed GCF
+            fetch('https://us-west2-divine-clone-398400.cloudfunctions.net/function-1', {  // Replace <YOUR-GCF-URL> with the actual URL of your deployed GCF
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
