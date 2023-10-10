@@ -16,45 +16,62 @@
             padding: 0;
             background-color: #fff;
             color: #212121;
-        }
+            background-color: transparent; /* So that the #main-background can show through */
 
+        }
+        #main-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1; /* Ensure it sits below all other elements */
+            background-image: url('https://morethanjustparks.com/wp-content/uploads/2020/09/2Q3A5635-2.jpg');
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        
         header {
             padding: 20px 40px;
             text-align: center;
             border-bottom: 1px solid #e0e0e0;
+            background-color: #E0B64D; /* CSUS Gold */
+            color: white; /* Text contrast for gold background */
         }
-
+        
         nav ul {
             display: flex;
             justify-content: center;
             list-style-type: none;
             padding: 20px 0;
-            background-color: #f5f5f5;
+            background-color: #00563B; /* CSUS Green */
         }
-
+        
         nav ul li {
             margin: 0 15px;
         }
-
+        
         nav a {
             text-decoration: none;
-            color: #757575;
+            color: #E0B64D; /* CSUS Gold on green background for hyperlinks */
             font-weight: 500;
             padding: 5px 10px;
             border-radius: 4px;
             transition: background-color 0.3s;
         }
-
+        
         nav a:hover {
-            background-color: #e0e0e0;
+            background-color: #E0B64D; /* CSUS Gold */
+            color: white; /* Text contrast on hover */
         }
-
+        
         section {
             padding: 40px;
         }
-
+        
         button {
-            background-color: #1a73e8;
+            background-color: #1a73e8; /* Google Blue */
             border: none;
             padding: 10px 20px;
             border-radius: 4px;
@@ -63,11 +80,11 @@
             color: #ffffff;
             font-weight: 500;
         }
-
+        
         button:hover {
-            background-color: #155dc4;
+            background-color: #155dc4; /* Darker shade for hover */
         }
-
+        
         #map {
             height: 400px;
             width: 100%;
@@ -75,7 +92,7 @@
             border-radius: 8px;
             box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
         }
-
+        
         input[type="text"] {
             padding: 10px;
             border-radius: 4px;
@@ -84,6 +101,9 @@
             color: #212121;
             margin-right: 10px;
         }
+        
+        /* ... rest of the CSS for the card and card container ... */
+        
 
         #cards-container {
             display: flex;
@@ -111,25 +131,88 @@
             transform: scale(1.05);
         }
         
+        #main-header-link {
+            text-decoration: none; /* Removes underline */
+            color: white; /* Sets text color to white */
+        }
+        
+        #main-header-link:hover {
+            color: white; /* Keeps text color white even on hover */
+        }
+
+        #events-form {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+
+        #events-form input, #events-form textarea, #events-form button {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        #events-form button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        #events-display {
+            margin: 20px 0;
+        }
+
+        .event-card {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+
+        .event-card h3 {
+            margin: 0 0 10px;
+        }
+
+        .event-card p {
+            margin: 0;
+        }
+        
+        
 
     </style>
 </head>
 
 <body>
+        <div id="main-background"></div>    
     <header>
-        <h1>Hornet Homeless Resource Platform</h1>
+        <!-- enables users to click on main header to go to main page, the community bulletin -->
+        <h1><a id="main-header-link" href="#" onclick="loadPage('default'); return false;">Hornet Homeless Resource Platform</a></h1>
         <p>Connecting you with essential resources and support services.</p>
     </header>
 
     <nav>
         <ul>
-            <li><a href="#" onclick="searchShelters()">Shelters</a></li>
-            <li><a href="#food-banks" onclick="searchFoodBanks()">Food Banks</a></li>
-            <li><a href="#" onclick="searchHealthcare()">Healthcare</a></li>
-            <li><a href="#" onclick="searchEmploymentResources()">Employment Resources</a></li>
+            <li><a href="#" onclick="loadPage('shelters')">Shelters</a></li>
+            <li><a href="#" onclick="loadPage('food-banks')">Food Banks</a></li>
+            <li><a href="#" onclick="loadPage('healthcare')">Healthcare</a></li>
+            <li><a href="#" onclick="loadPage('employment-resources')">Employment Resources</a></li>
         </ul>
     </nav>
-
+    
     <section>
         <h2>Search for Resources</h2>
         <p>Enter your location to find resources near you:</p>
@@ -145,23 +228,24 @@
             <div class="card" id="card3"></div>
         </div>
         
-        <button onclick="clearMarkers()">Clear Markers</button>
     </section>
 
-    <!-- Google Maps API at the bottom to ensure page is loaded before functions execute -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places&callback=initMap" async defer></script>
 
+    <!-- Google Maps API at the bottom to ensure page is loaded before everything executes -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places" async defer></script>
+
+    <!-- JavaScript code -->
     <script>
         let markers = [];
         let map;
-
+        // this will intitiate the map right on Sacramento just as a starting point
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: -34.397, lng: 150.644 },
+                center: { lat: 38.581, lng: -121.494 },
                 zoom: 8
             });
         }
-    
+        // Geocode the address and center the map on the location
         function geocodeAddress() {
             const geocoder = new google.maps.Geocoder();
             const address = document.getElementById('address-input').value;
@@ -172,14 +256,17 @@
                         map: map,
                         position: results[0].geometry.location
                     });
+                    searchResources(activeSection); // Trigger a search after setting the location
                 } else {
                     alert('Geocode was not successful for the following reason: ' + status);
                 }
             });
         }
+        // Search for resources based on the keyword
         function searchResources(keyword) {
             const service = new google.maps.places.PlacesService(map);
             const userLocation = map.getCenter();
+            // Create info window when a marker is clicked
             const infowindow = new google.maps.InfoWindow();
 
             service.nearbySearch({
@@ -187,13 +274,15 @@
                 radius: '5000',
                 keyword: keyword
             }, callback);
-
+            // Callback function to handle the results
             function callback(results, status) {
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    clearCards();  // Reset the cards before populating new ones
+        
                     for (let i = 0; i < results.length; i++) {
                         createMarker(results[i]);
-                        if(i < 3) { // For the top 3 places
-                            document.getElementById(`card${i+1}`).innerHTML = `
+                        if (i < 3) {  // top 3 places populate by name and address, add phone number later?
+                            document.getElementById(`card${i + 1}`).innerHTML = `
                                 <h3>${results[i].name}</h3>
                                 <p>${results[i].vicinity}</p>
                             `;
@@ -201,8 +290,7 @@
                     }
                 }
             }
-            
-
+            // Create a marker for each place                
             function createMarker(place) {
                 const marker = new google.maps.Marker({
                     map: map,
@@ -216,30 +304,200 @@
                 });
             }
         }
-
+        // Clear all markers from the map
         function clearMarkers() {
             for(let i = 0; i < markers.length; i++) {
                 markers[i].setMap(null);
             }
             markers = [];
         }
+        // Set the active section to search for, keywords in the '' tell the api what to search for
+        function searchShelters() {
+            activeSection = 'homeless shelter';
+        }
+        
+        function searchFoodBanks() {
+            activeSection = 'food bank';
+        }
+        
+        function searchHealthcare() {
+            activeSection = 'free clinic';
+        }
+        
+        function searchEmploymentResources() {
+            activeSection = '"employment agency" "job center" "workforce center"';
+        }        
+        // Load the page content based on the page name, will be called when
+        // the user clicks on a nav link
+        function loadPage(page) {
+            const section = document.querySelector('section');
+        
+            switch(page) {
+                case 'home':
+                    section.innerHTML = `
+                    <div id="events-form">
+                        <h2>Submit a Community Event</h2>
+                        <input type="text" id="event-name" placeholder="Event Name" required>
+                        <input type="date" id="event-date" required>
+                        <input type="text" id="event-location" placeholder="Event Location" required>
+                        <textarea id="event-description" placeholder="Event Description" required></textarea>
+                        <button onclick="submitEvent()">Submit Event</button>
+                    </div>
+
+                    <div id="events-display">
+                        <h2>Upcoming Community Events</h2>
+                        <!-- Event cards will be appended here -->
+                    </div>
+                `;
+                break;
+                // Add other pages here using 'case pageName:, copy the code below'
+                // and replace the content with the new page content
+                case 'shelters':
+                    section.innerHTML = `
+                        <h2>Shelters</h2>
+                        <p>Enter your location to find shelters near you:</p>
+                        <input type="text" id="address-input" placeholder="Enter city or zip code">
+                        <button onclick="geocodeAddress()">Search</button>
+                        <div id="map"></div>
+                        <button onclick="clearMarkers()">Clear Markers</button>
+                        <!-- Add the card section here -->
+                        <div id="cards-container">
+                            <div class="card" id="card1"></div>
+                            <div class="card" id="card2"></div>
+                            <div class="card" id="card3"></div>
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        initMap();
+                        searchShelters();
+                    }, 0);
+                    break;
+        
+                case 'food-banks':
+                    section.innerHTML = `
+                        <h2>Food Banks</h2>
+                        <p>Enter your location to find food banks near you:</p>
+                        <input type="text" id="address-input" placeholder="Enter city or zip code">
+                        <button onclick="geocodeAddress()">Search</button>
+                        <div id="map"></div>
+                        <button onclick="clearMarkers()">Clear Markers</button>
+                        <!-- Add the card section here -->
+                        <div id="cards-container">
+                            <div class="card" id="card1"></div>
+                            <div class="card" id="card2"></div>
+                            <div class="card" id="card3"></div>
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        initMap();
+                        searchFoodBanks();
+                    }, 0);
+                    break;
+        
+                case 'healthcare':
+                    section.innerHTML = `
+                        <h2>Healthcare</h2>
+                        <p>Enter your location to find healthcare services near you:</p>
+                        <input type="text" id="address-input" placeholder="Enter city or zip code">
+                        <button onclick="geocodeAddress()">Search</button>
+                        <div id="map"></div>
+                        <button onclick="clearMarkers()">Clear Markers</button>
+                        <!-- Add the card section here -->
+                        <div id="cards-container">
+                            <div class="card" id="card1"></div>
+                            <div class="card" id="card2"></div>
+                            <div class="card" id="card3"></div>
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        initMap();
+                        searchHealthcare();
+                    }, 0);
+                    break
+        
+                case 'employment-resources':
+                    section.innerHTML = `
+                        <h2>Employment Resources</h2>
+                        <p>Enter your location to find employment resources near you:</p>
+                        <input type="text" id="address-input" placeholder="Enter city or zip code">
+                        <button onclick="geocodeAddress()">Search</button>
+                        <div id="map"></div>
+                        <button onclick="clearMarkers()">Clear Markers</button>
+                        <!-- Add the card section here -->
+                        <div id="cards-container">
+                            <div class="card" id="card1"></div>
+                            <div class="card" id="card2"></div>
+                            <div class="card" id="card3"></div>
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        initMap();
+                        searchEmploymentResources();
+                    }, 0);
+                    break;
+        
+                default:
+                    section.innerHTML = `
+                    <div id="events-form">
+                        <h2>Submit a Community Event</h2>
+                        <input type="text" id="event-name" placeholder="Event Name" required>
+                        <input type="date" id="event-date" required>
+                        <input type="text" id="event-location" placeholder="Event Location" required>
+                        <textarea id="event-description" placeholder="Event Description" required></textarea>
+                        <button onclick="submitEvent()">Submit Event</button>
+                    </div>
+
+                    <div id="events-display">
+                        <h2>Upcoming Community Events</h2>
+                        <!-- Event cards will be appended here -->
+                    </div>
+                `;
+                break;
+            }
+        }
+        
+        // Clear the cards
+        function clearCards() {
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`card${i}`).innerHTML = "";  // Clear the cards
+            }
+        }
+
+        function submitEvent() {
+            // Get form values
+            const eventName = document.getElementById('event-name').value;
+            const eventDate = document.getElementById('event-date').value;
+            const eventLocation = document.getElementById('event-location').value;
+            const eventDescription = document.getElementById('event-description').value;
+        
+            // Create a JSON object
+            const eventData = {
+                eventName: eventName,
+                eventDate: eventDate,
+                eventLocation: eventLocation,
+                eventDescription: eventDescription
+            };
+        
+            // Send data to GCF (which will then forward to Google Sheets)
+            fetch('https://us-west2-divine-clone-398400.cloudfunctions.net/function-1', {  // Replace <YOUR-GCF-URL> with the actual URL of your deployed GCF
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(eventData),  // Convert the JSON object to a string
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch((error) => console.error('Error:', error));
+        }
+
         
 
-        function searchShelters() {
-            searchResources('homeless shelter');
-        }
-
-        function searchFoodBanks() {
-            searchResources('food bank');
-        }
-
-        function searchHealthcare() {
-            searchResources('free clinic');
-        }
-
-        function searchEmploymentResources() {
-            searchResources('"employment agency" "job center" "workforce center"');
-        }
+        // Load the default page
+        document.addEventListener("DOMContentLoaded", function() {
+            loadPage('default');
+        });
+        
         
     
     </script>
