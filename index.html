@@ -490,12 +490,56 @@
             .then(data => console.log(data))
             .catch((error) => console.error('Error:', error));
         }
-
         
+        function fetchAndDisplayEvents() {
+            // Replace the URL below with the URL of your deployed Google Cloud Function
+            const gcfUrl = 'https://us-west2-divine-clone-398400.cloudfunctions.net/function-2';
+            
+            // Fetch data from GCF
+            fetch(gcfUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the received event data here
+                    displayEvents(data);
+                })
+                .catch(error => console.error('Error fetching event data:', error));
+        }
 
+        function displayEvents(events) {
+            const eventsDisplay = document.getElementById('events-display');
+        
+            // Clear previous events if any
+            eventsDisplay.innerHTML = '';
+            
+            // Create and append new event cards
+            events.forEach(event => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'event-card';
+        
+                const eventName = document.createElement('h3');
+                eventName.textContent = event.eventName;
+                eventCard.appendChild(eventName);
+        
+                const eventDate = document.createElement('p');
+                eventDate.textContent = event.eventDate;
+                eventCard.appendChild(eventDate);
+        
+                const eventLocation = document.createElement('p');
+                eventLocation.textContent = event.eventLocation;
+                eventCard.appendChild(eventLocation);
+        
+                const eventDescription = document.createElement('p');
+                eventDescription.textContent = event.eventDescription;
+                eventCard.appendChild(eventDescription);
+        
+                eventsDisplay.appendChild(eventCard);
+            });
+        }
+        
         // Load the default page
         document.addEventListener("DOMContentLoaded", function() {
             loadPage('default');
+            fetchAndDisplayEvents(); 
         });
         
         
