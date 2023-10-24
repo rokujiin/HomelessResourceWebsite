@@ -439,21 +439,21 @@
         
                 default:
                     section.innerHTML = `
-                    <div id="events-form">
-                        <h2>Want to contribute?</h2>
-                        <h2>Submit a Community Event!</h2>
-                        <input type="text" id="event-name" placeholder="Event Name" required>
-                        <input type="date" id="event-date" required>
-                        <input type="text" id="event-location" placeholder="Event Location" required>
-                        <textarea id="event-description" placeholder="Event Description" required></textarea>
-                        <button onclick="submitEvent()">Submit Event</button>
-                    </div>
-
-                    <div id="events-display">
-                        <h2>Upcoming Community Events</h2>
-                        <!-- Event cards will be appended here -->
-                    </div>
-                `;
+                        <div id="events-display">
+                            <h2>Upcoming Community Events</h2>
+                            <!-- Event cards will be appended here -->
+                        </div>
+                
+                        <div id="events-form">
+                            <h2>Want to contribute?</h2>
+                            <h2>Submit a Community Event!</h2>
+                            <input type="text" id="event-name" placeholder="Event Name" required>
+                            <input type="date" id="event-date" required>
+                            <input type="text" id="event-location" placeholder="Event Location" required>
+                            <textarea id="event-description" placeholder="Event Description" required></textarea>
+                            <button onclick="submitEvent()">Submit Event</button>
+                        </div>
+                    `;
                 break;
             }
         }
