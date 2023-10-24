@@ -533,7 +533,7 @@
                 eventCard.appendChild(eventName);
         
                 const eventDate = document.createElement('p');
-                eventDate.textContent = event.eventDate;
+                eventDate.textContent = formatDate(event.eventDate); // Format the date here
                 eventCard.appendChild(eventDate);
         
                 const eventLocation = document.createElement('p');
@@ -547,6 +547,13 @@
                 eventsDisplay.appendChild(eventCard);
             });
         }
+        
+        // Helper function to format the date
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toISOString().split('T')[0]; // Extracts the YYYY-MM-DD part of the ISO string
+        }
+
         
         // Load the default page
         document.addEventListener("DOMContentLoaded", function() {
