@@ -336,7 +336,8 @@
                 case 'home':
                     section.innerHTML = `
                     <div id="events-form">
-                        <h2>Submit a Community Event</h2>
+                        <h2>Want to contribute?</h2>
+                        <h2>Submit a Community Event!</h2>
                         <input type="text" id="event-name" placeholder="Event Name" required>
                         <input type="date" id="event-date" required>
                         <input type="text" id="event-location" placeholder="Event Location" required>
@@ -356,7 +357,7 @@
                     section.innerHTML = `
                         <h2>Shelters</h2>
                         <p>Enter your location to find shelters near you:</p>
-                        <input type="text" id="address-input" placeholder="Enter city or zip code">
+                        <input type="text" id="address-input" placeholder="Enter street address">
                         <button onclick="geocodeAddress()">Search</button>
                         <div id="map"></div>
                         <button onclick="clearMarkers()">Clear Markers</button>
@@ -377,7 +378,7 @@
                     section.innerHTML = `
                         <h2>Food Banks</h2>
                         <p>Enter your location to find food banks near you:</p>
-                        <input type="text" id="address-input" placeholder="Enter city or zip code">
+                        <input type="text" id="address-input" placeholder="Enter street address">
                         <button onclick="geocodeAddress()">Search</button>
                         <div id="map"></div>
                         <button onclick="clearMarkers()">Clear Markers</button>
@@ -398,7 +399,7 @@
                     section.innerHTML = `
                         <h2>Healthcare</h2>
                         <p>Enter your location to find healthcare services near you:</p>
-                        <input type="text" id="address-input" placeholder="Enter city or zip code">
+                        <input type="text" id="address-input" placeholder="Enter street address">
                         <button onclick="geocodeAddress()">Search</button>
                         <div id="map"></div>
                         <button onclick="clearMarkers()">Clear Markers</button>
@@ -419,7 +420,7 @@
                     section.innerHTML = `
                         <h2>Employment Resources</h2>
                         <p>Enter your location to find employment resources near you:</p>
-                        <input type="text" id="address-input" placeholder="Enter city or zip code">
+                        <input type="text" id="address-input" placeholder="Enter street address">
                         <button onclick="geocodeAddress()">Search</button>
                         <div id="map"></div>
                         <button onclick="clearMarkers()">Clear Markers</button>
@@ -439,7 +440,8 @@
                 default:
                     section.innerHTML = `
                     <div id="events-form">
-                        <h2>Want to Contribute? Submit a Community Event!</h2>
+                        <h2>Want to contribute?</h2>
+                        <h2>Submit a Community Event!</h2>
                         <input type="text" id="event-name" placeholder="Event Name" required>
                         <input type="date" id="event-date" required>
                         <input type="text" id="event-location" placeholder="Event Location" required>
