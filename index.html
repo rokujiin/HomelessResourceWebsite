@@ -202,7 +202,11 @@
             margin: 0;
         }
         
-        
+        .highlight-text {
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white */
+            padding: 0.5em 1em; /* Provide some space inside the background */
+            border-radius: 5px; /* Rounded corners */
+        }
 
     </style>
 </head>
@@ -367,7 +371,7 @@
                 case 'shelters':
                     section.innerHTML = `
                         <h2>Shelters</h2>
-                        <p>Enter your location to find shelters near you:</p>
+                        <p><span class="highlight-text">Enter your location to find shelters near you:</span></p>
                         <input type="text" id="address-input" placeholder="Enter street address">
                         <button onclick="geocodeAddress()">Search</button>
                         <div id="map"></div>
@@ -388,7 +392,7 @@
                 case 'food-banks':
                     section.innerHTML = `
                         <h2>Food Banks</h2>
-                        <p>Enter your location to find food banks near you:</p>
+                        <p><span class="highlight-text">Enter your location to find food banks near you:</span></p>
                         <input type="text" id="address-input" placeholder="Enter street address">
                         <button onclick="geocodeAddress()">Search</button>
                         <div id="map"></div>
@@ -409,7 +413,7 @@
                 case 'healthcare':
                     section.innerHTML = `
                         <h2>Healthcare</h2>
-                        <p>Enter your location to find healthcare services near you:</p>
+                        <p><span class="highlight-text">Enter your location to find healthcare services near you:</span></p>
                         <input type="text" id="address-input" placeholder="Enter street address">
                         <button onclick="geocodeAddress()">Search</button>
                         <div id="map"></div>
@@ -430,7 +434,7 @@
                 case 'employment-resources':
                     section.innerHTML = `
                         <h2>Employment Resources</h2>
-                        <p>Enter your location to find employment resources near you:</p>
+                        <p><span class="highlight-text">Enter your location to find employment resources near you:</span></p>
                         <input type="text" id="address-input" placeholder="Enter street address">
                         <button onclick="geocodeAddress()">Search</button>
                         <div id="map"></div>
