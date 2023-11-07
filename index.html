@@ -245,10 +245,6 @@
         
     </section>
 
-
-    <!-- Google Maps API at the bottom to ensure page is loaded before everything executes -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places,geometry&callback=initMap" async defer></script>
-
     <!-- JavaScript code -->
     <script>
         let markers = [];
@@ -580,14 +576,18 @@
 
         
         // Load the default page
-        document.addEventListener("DOMContentLoaded", function() {
+        window.onload = function() {
+            initMap(); // Now it's safe to call initMap
             loadPage('default');
-            startPollingForEvents(); 
-        });
-        
+            startPollingForEvents();
+        };
+            
         
     
     </script>
+    <!-- Google Maps API at the bottom to ensure page is loaded before everything executes -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places,geometry&callback=initMap" async defer></script>
+
 </body>
 
 </html>
