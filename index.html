@@ -293,13 +293,20 @@
             function callback(results, status) {
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
                     clearCards();  // Reset the cards before populating new ones
-        
+                    
                     for (let i = 0; i < results.length; i++) {
+                        const distance = google.maps.geometry.spherical.computeDistanceBetween(
+                            userLocation, results[i].geometry.location
+                        );
+                        const distanceInKm = (distance / 1000).toFixed(2);  // Convert meters to kilometers and round to 2 decimal places
+                        
                         createMarker(results[i]);
-                        if (i < 3) {  // top 3 places populate by name and address, add phone number later?
+                        if (i < 3) {
+                            // Update to include the distance
                             document.getElementById(`card${i + 1}`).innerHTML = `
                                 <h3>${results[i].name}</h3>
                                 <p>${results[i].vicinity}</p>
+                                <p>${distanceInKm} km away</p>
                             `;
                         }
                     }
