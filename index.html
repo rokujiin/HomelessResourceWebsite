@@ -207,6 +207,58 @@
             padding: 0.5em 1em; /* Provide some space inside the background */
             border-radius: 5px; /* Rounded corners */
         }
+        .form-container {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 20px auto;
+            width: 50%;
+        }
+        
+        .form-container input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        
+        .form-container button {
+            width: 80%;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        
+        .form-container p {
+            margin: 10px 0;
+        }
+
+        #join-us-btn {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        #join-us-btn span {
+            text-decoration: underline;
+            color: #E0B64D; /* Highlight color */
+            cursor: pointer;
+        }
+        
 
     </style>
 </head>
@@ -217,7 +269,36 @@
         <!-- enables users to click on main header to go to main page, the community bulletin -->
         <h1><a id="main-header-link" href="#" onclick="loadPage('default'); return false;">Hornet Homeless Resource Platform</a></h1>
         <p>Connecting you with essential resources and support services.</p>
+        <button id="join-us-btn" onclick="toggleLoginForm()">Don't have an account? Join us here! <span>here!</span></button>
     </header>
+    <!-- Login Form -->
+    <div id="login-form" class="form-container" style="display:none;">
+        <h2>Login</h2>
+        <input type="email" id="login-email" placeholder="Email">
+        <input type="password" id="login-password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p><a href="#" onclick="showForm('register-form')">Create an Account</a></p>
+        <p><a href="#" onclick="showForm('forgot-password-form')">Forgot Password?</a></p>
+    </div>
+
+    <!-- Registration Form -->
+    <div id="register-form" class="form-container" style="display:none;">
+        <h2>Register</h2>
+        <input type="text" id="register-name" placeholder="Full Name">
+        <input type="email" id="register-email" placeholder="Email">
+        <input type="password" id="register-password" placeholder="Password">
+        <button onclick="register()">Create Account</button>
+        <p><a href="#" onclick="showForm('login-form')">Already have an account? Login</a></p>
+    </div>
+
+    <!-- Forgot Password Form -->
+    <div id="forgot-password-form" class="form-container" style="display:none;">
+        <h2>Forgot Password</h2>
+        <input type="email" id="forgot-password-email" placeholder="Email">
+        <button onclick="resetPassword()">Reset Password</button>
+        <p><a href="#" onclick="showForm('login-form')">Back to Login</a></p>
+    </div>
+
 
     <nav>
         <ul>
@@ -543,17 +624,25 @@
         function displayEvents(events) {
             const eventsDisplay = document.getElementById('events-display');
             eventsDisplay.innerHTML = ''; // Clear previous events if any
-            
+        
             events.forEach(event => {
                 const eventCard = document.createElement('div');
                 eventCard.className = 'event-card';
+        
+                // Check if imageUrl exists and is not empty
+                if (event.imageUrl && event.imageUrl.trim() !== '') {
+                    const eventImage = document.createElement('img');
+                    eventImage.src = event.imageUrl;
+                    eventImage.alt = event.eventName; // Use event name as alt text
+                    eventCard.appendChild(eventImage);
+                }
         
                 const eventName = document.createElement('h3');
                 eventName.textContent = event.eventName;
                 eventCard.appendChild(eventName);
         
                 const eventDate = document.createElement('p');
-                eventDate.textContent = formatDate(event.eventDate); // Format the date here
+                eventDate.textContent = formatDate(event.eventDate); // Assuming you have a function to format date
                 eventCard.appendChild(eventDate);
         
                 const eventLocation = document.createElement('p');
@@ -568,11 +657,46 @@
             });
         }
         
+        
         // Helper function to format the date
         function formatDate(dateStr) {
             const date = new Date(dateStr);
             return date.toISOString().split('T')[0]; // Extracts the YYYY-MM-DD part of the ISO string
         }
+
+        function showForm(formId) {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('forgot-password-form').style.display = 'none';
+        
+            document.getElementById(formId).style.display = 'block';
+        }
+        
+        function login() {
+            // Placeholder for login logic
+            alert('Login logic not implemented');
+        }
+        
+        function register() {
+            // Placeholder for registration logic
+            alert('Registration logic not implemented');
+        }
+        
+        function resetPassword() {
+            // Placeholder for password reset logic
+            alert('Password reset logic not implemented');
+        }
+
+        function toggleLoginForm() {
+            var form = document.getElementById('login-form');
+            if (form.style.display === 'none' || form.style.display === '') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+        
+        
 
         
         // Load the default page
