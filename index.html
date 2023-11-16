@@ -258,6 +258,34 @@
             color: #E0B64D; /* Highlight color */
             cursor: pointer;
         }
+        footer {
+            padding: 20px;
+            background-color: #333; /* Dark background for the footer */
+            color: #fff; /* White text color */
+            text-align: center;
+        }
+        
+        #footer-links {
+            list-style-type: none; /* Removes bullet points from the list */
+            padding: 0; /* Removes default padding */
+            margin: 0; /* Removes default margin */
+        }
+        
+        #footer-links li {
+            display: inline; /* Display links in a line */
+            margin: 0 10px; /* Spacing between links */
+        }
+        
+        #footer-links a {
+            color: #E0B64D; /* CSUS Gold for links */
+            text-decoration: none; /* Removes underline */
+            transition: color 0.3s ease-in-out;
+        }
+        
+        #footer-links a:hover {
+            color: #fff; /* White color on hover */
+        }
+        
         
 
     </style>
@@ -631,10 +659,16 @@
         
                 // Check if imageUrl exists and is not empty
                 if (event.imageUrl && event.imageUrl.trim() !== '') {
+                    const link = document.createElement('a');
+                    link.href = event.redirectUrl || '#'; // Replace '#' with a default URL if necessary
+                    link.target = '_blank'; // Open in a new tab
+        
                     const eventImage = document.createElement('img');
                     eventImage.src = event.imageUrl;
                     eventImage.alt = event.eventName; // Use event name as alt text
-                    eventCard.appendChild(eventImage);
+        
+                    link.appendChild(eventImage);
+                    eventCard.appendChild(link);
                 }
         
                 const eventName = document.createElement('h3');
@@ -711,7 +745,15 @@
     </script>
     <!-- Google Maps API at the bottom to ensure page is loaded before everything executes -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places,geometry&callback=initMap"></script>
-
+    
+    <footer>
+        <ul id="footer-links">
+            <li><a href="#accessibility">Accessibility</a></li>
+            <li><a href="#contact-us">Contact Us</a></li>
+            <li><a href="#feedback">Feedback</a></li>
+        </ul>
+    </footer>
+    
 </body>
 
 </html>
