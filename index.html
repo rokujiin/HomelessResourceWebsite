@@ -811,17 +811,30 @@
             document.getElementById('feedback').value = ''; // Clear the form
             return false; // Prevent default form submission
         }
+
+        function resizeImagesToFitCards() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const cardWidth = card.offsetWidth;
+                const images = card.querySelectorAll('img');
+                images.forEach(img => {
+                    img.style.width = cardWidth + 'px';
+                    img.style.height = 'auto';
+                });
+            });
+        }
         
         
         
-        // Load the default page
-        window.onload = function() {
-            initMap(); // Now it's safe to call initMap
-            loadPage('default');
-            startPollingForEvents();
-        };
+    // Load the default page and resize images
+    window.onload = function() {
+        initMap(); // Now it's safe to call initMap
+        loadPage('default');
+        startPollingForEvents();
+        resizeImagesToFitCards(); // Resize images on page load
+    };
             
-        
+    window.onresize = resizeImagesToFitCards;
     
     </script>
     <!-- Google Maps API at the bottom to ensure page is loaded before everything executes -->
