@@ -788,6 +788,9 @@
         function submitFeedback() {
             const feedback = document.getElementById('feedback').value;
         
+            // Display a loading message or spinner (optional)
+            displayLoadingMessage(true);
+        
             fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-3', {
                 method: 'POST',
                 headers: {
@@ -796,21 +799,40 @@
                 body: JSON.stringify({ feedback: feedback })
             }).then(response => {
                 if (response.ok) {
-                    return response.text();
+                    return response.json(); // Assuming the response is JSON formatted
                 } else {
                     throw new Error('Network response was not ok.');
                 }
             }).then(data => {
                 console.log('Feedback submitted:', data);
-                // Handle successful submission
+        
+                // Display success message to the user
+                displaySubmissionStatus('Feedback submitted successfully!');
             }).catch(error => {
                 console.error('Error:', error);
-                // Handle error
+        
+                // Display error message to the user
+                displaySubmissionStatus(`Error submitting feedback: ${error.message}`);
+            }).finally(() => {
+                // Hide loading message or spinner
+                displayLoadingMessage(false);
+        
+                // Clear the form
+                document.getElementById('feedback').value = '';
             });
         
-            document.getElementById('feedback').value = ''; // Clear the form
-            return false; // Prevent default form submission
+            // Prevent default form submission
+            return false;
         }
+        
+        function displayLoadingMessage(show) {
+            // Implement this function to show or hide a loading message or spinner
+        }
+        
+        function displaySubmissionStatus(message) {
+            // Implement this function to display a submission status message to the user
+            al
+        
 
         function resizeImagesToFitCards() {
             const cards = document.querySelectorAll('.card');
