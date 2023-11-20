@@ -290,10 +290,13 @@
             background-color: black;
             color: white;
         }
-        
-        
-        
 
+        .event-card img {
+            max-width: 100%;
+            height: auto;
+            display: block; /* This ensures images are block level and do not have extra space below them */
+        }        
+        
     </style>
 </head>
 
@@ -813,7 +816,7 @@
         }
 
         function resizeImagesToFitCards() {
-            const cards = document.querySelectorAll('.card');
+            const cards = document.querySelectorAll('.event-card');
             cards.forEach(card => {
                 const cardWidth = card.offsetWidth;
                 const images = card.querySelectorAll('img');
@@ -822,9 +825,7 @@
                     img.style.height = 'auto';
                 });
             });
-        }
-        
-        
+        }        
         
     // Load the default page and resize images
     window.onload = function() {
