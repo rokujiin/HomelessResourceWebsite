@@ -285,9 +285,18 @@
         #footer-links a:hover {
             color: #fff; /* White color on hover */
         }
-        
-        
 
+        .high-contrast {
+            background-color: black;
+            color: white;
+        }
+
+        .event-card img {
+            max-width: 100%;
+            height: auto;
+            display: block; /* This ensures images are block level and do not have extra space below them */
+        }        
+        
     </style>
 </head>
 
@@ -563,6 +572,39 @@
                         searchEmploymentResources();
                     }, 0);
                     break;
+
+                    case 'accessibility':
+                    section.innerHTML = `
+                        <h2>Accessibility Options</h2>
+                        <p>Adjust the website settings for better accessibility:</p>
+                        <button onclick="adjustTextSize('larger')">Larger Text</button>
+                        <button onclick="adjustTextSize('smaller')">Smaller Text</button>
+                        <button onclick="adjustContrast()">High Contrast</button>
+                        <!-- Add other accessibility features as needed -->
+                    `;
+                    break;
+        
+                case 'contact':
+                    section.innerHTML = `
+                        <h2>Contact Us</h2>
+                        <p>Feel free to reach out to us:</p>
+                        <p>Email: contact@example.com</p>
+                        <p>Phone: 123-456-7890</p>
+                        <!-- Include a contact form if needed -->
+                    `;
+                    break;
+        
+                case 'feedback':
+                    section.innerHTML = `
+                        <h2>Feedback</h2>
+                        <p>We appreciate your feedback to improve our website:</p>
+                        <form id="feedback-form" onsubmit="submitFeedback(); return false;">
+                            <label for="feedback">Your Feedback:</label>
+                            <textarea id="feedback" name="feedback" required></textarea>
+                            <button type="submit">Submit Feedback</button>
+                        </form>
+                    `;
+                    break;
         
                 default:
                     section.innerHTML = `
@@ -582,6 +624,7 @@
                         </div>
                     `;
                 break;
+
             }
         }
         
@@ -730,17 +773,69 @@
             }
         }
         
+        function adjustTextSize(size) {
+            const root = document.documentElement;
+            let currentSize = parseFloat(getComputedStyle(root).fontSize);
         
+            if (size === 'larger') {
+                root.style.fontSize = (currentSize + 1) + 'px';
+            } else if (size === 'smaller') {
+                root.style.fontSize = (currentSize - 1) + 'px';
+            }
+        }
+        
+        function adjustContrast() {
+            document.body.classList.toggle('high-contrast');
+        }        
+        
+        function submitFeedback() {
+            const feedback = document.getElementById('feedback').value;
+        
+            fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-3', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ feedback: feedback })
+            }).then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            }).then(data => {
+                console.log('Feedback submitted:', data);
+                // Handle successful submission
+            }).catch(error => {
+                console.error('Error:', error);
+                // Handle error
+            });
+        
+            document.getElementById('feedback').value = ''; // Clear the form
+            return false; // Prevent default form submission
+        }
 
+        function resizeImagesToFitCards() {
+            const cards = document.querySelectorAll('.event-card');
+            cards.forEach(card => {
+                const cardWidth = card.offsetWidth;
+                const images = card.querySelectorAll('img');
+                images.forEach(img => {
+                    img.style.width = cardWidth + 'px';
+                    img.style.height = 'auto';
+                });
+            });
+        }        
         
-        // Load the default page
-        window.onload = function() {
-            initMap(); // Now it's safe to call initMap
-            loadPage('default');
-            startPollingForEvents();
-        };
+    // Load the default page and resize images
+    window.onload = function() {
+        initMap(); // Now it's safe to call initMap
+        loadPage('default');
+        startPollingForEvents();
+        resizeImagesToFitCards(); // Resize images on page load
+    };
             
-        
+    window.onresize = resizeImagesToFitCards;
     
     </script>
     <!-- Google Maps API at the bottom to ensure page is loaded before everything executes -->
@@ -748,9 +843,9 @@
     
     <footer>
         <ul id="footer-links">
-            <li><a href="#accessibility">Accessibility</a></li>
-            <li><a href="#contact-us">Contact Us</a></li>
-            <li><a href="#feedback">Feedback</a></li>
+            <li><a href="#" onclick="loadPage('accessibility'); return false;">Accessibility</a></li>
+            <li><a href="#" onclick="loadPage('contact'); return false;">Contact Us</a></li>
+            <li><a href="#" onclick="loadPage('feedback'); return false;">Feedback</a></li>
         </ul>
     </footer>
     
