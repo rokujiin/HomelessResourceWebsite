@@ -70,6 +70,7 @@
             padding: 40px;
         }
         
+
         button {
             background-color: #1a73e8; /* Google Blue */
             border: none;
@@ -131,27 +132,211 @@
             transform: scale(1.05);
         }
         
+        #main-header-link {
+            text-decoration: none; /* Removes underline */
+            color: white; /* Sets text color to white */
+        }
+        
+        #main-header-link:hover {
+            color: white; /* Keeps text color white even on hover */
+        }
 
+        #events-form {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+
+        #events-form input, #events-form textarea, #events-form button {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        #events-form button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        #events-display {
+            margin: 20px 0;
+        }
+
+        .event-card {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+
+        .event-card h3 {
+            margin: 0 0 10px;
+        }
+
+        .event-card p {
+            margin: 0;
+        }
+        
+        .highlight-text {
+            background-color: rgba(255, 255, 255, 0.7); 
+            padding: 0.5em 1em; /* Provide some space inside the background */
+            border-radius: 5px; /* Rounded corners */
+        }
+        .form-container {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 20px auto;
+            width: 50%;
+        }
+        
+        .form-container input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        
+        .form-container button {
+            width: 80%;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        
+        .form-container p {
+            margin: 10px 0;
+        }
+
+        #join-us-btn {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        #join-us-btn span {
+            text-decoration: underline;
+            color: #E0B64D; /* Highlight color */
+            cursor: pointer;
+        }
+        footer {
+            padding: 20px;
+            background-color: #333; /* Dark background for the footer */
+            color: #fff; /* White text color */
+            text-align: center;
+        }
+        
+        #footer-links {
+            list-style-type: none; /* Removes bullet points from the list */
+            padding: 0; /* Removes default padding */
+            margin: 0; /* Removes default margin */
+        }
+        
+        #footer-links li {
+            display: inline; /* Display links in a line */
+            margin: 0 10px; /* Spacing between links */
+        }
+        
+        #footer-links a {
+            color: #E0B64D; /* CSUS Gold for links */
+            text-decoration: none; /* Removes underline */
+            transition: color 0.3s ease-in-out;
+        }
+        
+        #footer-links a:hover {
+            color: #fff; /* White color on hover */
+        }
+
+        .high-contrast {
+            background-color: black;
+            color: white;
+        }
+
+        .event-card img {
+            max-width: 100%;
+            height: auto;
+            display: block; /* This ensures images are block level and do not have extra space below them */
+        }        
+        
     </style>
 </head>
 
 <body>
-    <body>
+
         <div id="main-background"></div>    
     <header>
-        <h1>Hornet Homeless Resource Platform</h1>
+        <!-- enables users to click on main header to go to main page, the community bulletin -->
+        <h1><a id="main-header-link" href="#" onclick="loadPage('default'); return false;">Hornet Homeless Resource Platform</a></h1>
         <p>Connecting you with essential resources and support services.</p>
+        <button id="join-us-btn" onclick="toggleLoginForm()">Don't have an account? Join us here! <span>here!</span></button>
     </header>
+    <!-- Login Form -->
+    <div id="login-form" class="form-container" style="display:none;">
+        <h2>Login</h2>
+        <input type="email" id="login-email" placeholder="Email">
+        <input type="password" id="login-password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p><a href="#" onclick="showForm('register-form')">Create an Account</a></p>
+        <p><a href="#" onclick="showForm('forgot-password-form')">Forgot Password?</a></p>
+    </div>
+
+    <!-- Registration Form -->
+    <div id="register-form" class="form-container" style="display:none;">
+        <h2>Register</h2>
+        <input type="text" id="register-name" placeholder="Full Name">
+        <input type="email" id="register-email" placeholder="Email">
+        <input type="password" id="register-password" placeholder="Password">
+        <button onclick="register()">Create Account</button>
+        <p><a href="#" onclick="showForm('login-form')">Already have an account? Login</a></p>
+    </div>
+
+    <!-- Forgot Password Form -->
+    <div id="forgot-password-form" class="form-container" style="display:none;">
+        <h2>Forgot Password</h2>
+        <input type="email" id="forgot-password-email" placeholder="Email">
+        <button onclick="resetPassword()">Reset Password</button>
+        <p><a href="#" onclick="showForm('login-form')">Back to Login</a></p>
+    </div>
+
 
     <nav>
         <ul>
-            <li><a href="#" onclick="searchShelters()">Shelters</a></li>
-            <li><a href="#food-banks" onclick="searchFoodBanks()">Food Banks</a></li>
-            <li><a href="#" onclick="searchHealthcare()">Healthcare</a></li>
-            <li><a href="#" onclick="searchEmploymentResources()">Employment Resources</a></li>
+            <li><a href="#" onclick="loadPage('shelters')">Shelters</a></li>
+            <li><a href="#" onclick="loadPage('food-banks')">Food Banks</a></li>
+            <li><a href="#" onclick="loadPage('healthcare')">Healthcare</a></li>
+            <li><a href="#" onclick="loadPage('employment-resources')">Employment Resources</a></li>
         </ul>
     </nav>
-
+    
     <section>
         <h2>Search for Resources</h2>
         <p>Enter your location to find resources near you:</p>
@@ -169,20 +354,18 @@
         
     </section>
 
-    <!-- Google Maps API at the bottom to ensure page is loaded before functions execute -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places&callback=initMap" async defer></script>
-
+    <!-- JavaScript code -->
     <script>
         let markers = [];
         let map;
-
+        // this will intitiate the map right on Sacramento just as a starting point
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: -34.397, lng: 150.644 },
+                center: { lat: 38.581, lng: -121.494 },
                 zoom: 8
             });
         }
-    
+        // Geocode the address and center the map on the location
         function geocodeAddress() {
             const geocoder = new google.maps.Geocoder();
             const address = document.getElementById('address-input').value;
@@ -193,37 +376,48 @@
                         map: map,
                         position: results[0].geometry.location
                     });
+                    searchResources(activeSection); // Trigger a search after setting the location
                 } else {
                     alert('Geocode was not successful for the following reason: ' + status);
                 }
             });
         }
+        // Search for resources based on the keyword
         function searchResources(keyword) {
             const service = new google.maps.places.PlacesService(map);
             const userLocation = map.getCenter();
+            // Create info window when a marker is clicked
             const infowindow = new google.maps.InfoWindow();
 
             service.nearbySearch({
                 location: userLocation,
-                radius: '5000',
+                radius: '1000',    //distance to search in meters
                 keyword: keyword
             }, callback);
-
+            // Callback function to handle the results
             function callback(results, status) {
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    clearCards();  // Reset the cards before populating new ones
+                    
                     for (let i = 0; i < results.length; i++) {
+                        const distance = google.maps.geometry.spherical.computeDistanceBetween(
+                            userLocation, results[i].geometry.location
+                        );
+                        const distanceInKm = (distance / 1000).toFixed(2);  // Convert meters to kilometers and round to 2 decimal places
+                        
                         createMarker(results[i]);
-                        if(i < 3) { // For the top 3 places
-                            document.getElementById(`card${i+1}`).innerHTML = `
+                        if (i < 3) {
+                            // Update to include the distance
+                            document.getElementById(`card${i + 1}`).innerHTML = `
                                 <h3>${results[i].name}</h3>
                                 <p>${results[i].vicinity}</p>
+                                <p>${distanceInKm} km away</p>
                             `;
                         }
                     }
                 }
             }
-            
-
+            // Create a marker for each place                
             function createMarker(place) {
                 const marker = new google.maps.Marker({
                     map: map,
@@ -237,33 +431,415 @@
                 });
             }
         }
-
+        // Clear all markers from the map
         function clearMarkers() {
             for(let i = 0; i < markers.length; i++) {
                 markers[i].setMap(null);
             }
             markers = [];
         }
-        
-
+        // Set the active section to search for, keywords in the '' tell the api what to search for
         function searchShelters() {
-            searchResources('homeless shelter');
-        }
-
-        function searchFoodBanks() {
-            searchResources('food bank');
-        }
-
-        function searchHealthcare() {
-            searchResources('free clinic');
-        }
-
-        function searchEmploymentResources() {
-            searchResources('"employment agency" "job center" "workforce center"');
+            activeSection = 'homeless shelter';
         }
         
+        function searchFoodBanks() {
+            activeSection = 'food bank';
+        }
+        
+        function searchHealthcare() {
+            activeSection = 'free clinic';
+        }
+        
+        function searchEmploymentResources() {
+            activeSection = '"employment agency" "job center" "workforce center"';
+        }        
+        // Load the page content based on the page name, will be called when
+        // the user clicks on a nav link
+        function loadPage(page) {
+            const section = document.querySelector('section');
+        
+            switch(page) {
+                case 'home':
+                    section.innerHTML = `
+                        <div id="events-display">
+                            <h2>Upcoming Community Events</h2>
+                            <!-- Event cards will be appended here -->
+                        </div>
+                
+                        <div id="events-form">
+                            <h2>Want to contribute?</h2>
+                            <h2>Submit a Community Event!</h2>
+                            <input type="text" id="event-name" placeholder="Event Name" required>
+                            <input type="date" id="event-date" required>
+                            <input type="text" id="event-location" placeholder="Event Location" required>
+                            <textarea id="event-description" placeholder="Event Description" required></textarea>
+                            <button onclick="submitEvent()">Submit Event</button>
+                        </div>
+                    `;
+                break;
+                // Add other pages here using 'case pageName:, copy the code below'
+                // and replace the content with the new page content
+                case 'shelters':
+                    section.innerHTML = `
+                        <h2>Shelters</h2>
+                        <p><span class="highlight-text">Enter your location to find shelters near you:</span></p>
+                        <input type="text" id="address-input" placeholder="Enter street address">
+                        <button onclick="geocodeAddress()">Search</button>
+                        <div id="map"></div>
+                        <button onclick="clearMarkers()">Clear Markers</button>
+                        <!-- Add the card section here -->
+                        <div id="cards-container">
+                            <div class="card" id="card1"></div>
+                            <div class="card" id="card2"></div>
+                            <div class="card" id="card3"></div>
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        initMap();
+                        searchShelters();
+                    }, 0);
+                    break;
+        
+                case 'food-banks':
+                    section.innerHTML = `
+                        <h2>Food Banks</h2>
+                        <p><span class="highlight-text">Enter your location to find food banks near you:</span></p>
+                        <input type="text" id="address-input" placeholder="Enter street address">
+                        <button onclick="geocodeAddress()">Search</button>
+                        <div id="map"></div>
+                        <button onclick="clearMarkers()">Clear Markers</button>
+                        <!-- Add the card section here -->
+                        <div id="cards-container">
+                            <div class="card" id="card1"></div>
+                            <div class="card" id="card2"></div>
+                            <div class="card" id="card3"></div>
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        initMap();
+                        searchFoodBanks();
+                    }, 0);
+                    break;
+        
+                case 'healthcare':
+                    section.innerHTML = `
+                        <h2>Healthcare</h2>
+                        <p><span class="highlight-text">Enter your location to find healthcare services near you:</span></p>
+                        <input type="text" id="address-input" placeholder="Enter street address">
+                        <button onclick="geocodeAddress()">Search</button>
+                        <div id="map"></div>
+                        <button onclick="clearMarkers()">Clear Markers</button>
+                        <!-- Add the card section here -->
+                        <div id="cards-container">
+                            <div class="card" id="card1"></div>
+                            <div class="card" id="card2"></div>
+                            <div class="card" id="card3"></div>
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        initMap();
+                        searchHealthcare();
+                    }, 0);
+                    break
+        
+                case 'employment-resources':
+                    section.innerHTML = `
+                        <h2>Employment Resources</h2>
+                        <p><span class="highlight-text">Enter your location to find employment resources near you:</span></p>
+                        <input type="text" id="address-input" placeholder="Enter street address">
+                        <button onclick="geocodeAddress()">Search</button>
+                        <div id="map"></div>
+                        <button onclick="clearMarkers()">Clear Markers</button>
+                        <!-- Add the card section here -->
+                        <div id="cards-container">
+                            <div class="card" id="card1"></div>
+                            <div class="card" id="card2"></div>
+                            <div class="card" id="card3"></div>
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        initMap();
+                        searchEmploymentResources();
+                    }, 0);
+                    break;
+
+                    case 'accessibility':
+                    section.innerHTML = `
+                        <h2>Accessibility Options</h2>
+                        <p>Adjust the website settings for better accessibility:</p>
+                        <button onclick="adjustTextSize('larger')">Larger Text</button>
+                        <button onclick="adjustTextSize('smaller')">Smaller Text</button>
+                        <button onclick="adjustContrast()">High Contrast</button>
+                        <!-- Add other accessibility features as needed -->
+                    `;
+                    break;
+        
+                case 'contact':
+                    section.innerHTML = `
+                        <h2>Contact Us</h2>
+                        <p>Feel free to reach out to us:</p>
+                        <p>Email: contact@example.com</p>
+                        <p>Phone: 123-456-7890</p>
+                        <!-- Include a contact form if needed -->
+                    `;
+                    break;
+        
+                case 'feedback':
+                    section.innerHTML = `
+                        <h2>Feedback</h2>
+                        <p>We appreciate your feedback to improve our website:</p>
+                        <form id="feedback-form" onsubmit="submitFeedback(); return false;">
+                            <label for="feedback">Your Feedback:</label>
+                            <textarea id="feedback" name="feedback" required></textarea>
+                            <button type="submit">Submit Feedback</button>
+                        </form>
+                    `;
+                    break;
+        
+                default:
+                    section.innerHTML = `
+                        <div id="events-display">
+                            <h2>Upcoming Community Events</h2>
+                            <!-- Event cards will be appended here -->
+                        </div>
+                
+                        <div id="events-form">
+                            <h2>Want to contribute?</h2>
+                            <h2>Submit a Community Event!</h2>
+                            <input type="text" id="event-name" placeholder="Event Name" required>
+                            <input type="date" id="event-date" required>
+                            <input type="text" id="event-location" placeholder="Event Location" required>
+                            <textarea id="event-description" placeholder="Event Description" required></textarea>
+                            <button onclick="submitEvent()">Submit Event</button>
+                        </div>
+                    `;
+                break;
+
+            }
+        }
+        
+        // Clear the cards
+        function clearCards() {
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`card${i}`).innerHTML = "";  // Clear the cards
+            }
+        }
+
+        function submitEvent() {
+            // Get form values
+            const eventName = document.getElementById('event-name').value;
+            const eventDate = document.getElementById('event-date').value;
+            const eventLocation = document.getElementById('event-location').value;
+            const eventDescription = document.getElementById('event-description').value;
+        
+            // Create a JSON object
+            const eventData = {
+                eventName: eventName,
+                eventDate: eventDate,
+                eventLocation: eventLocation,
+                eventDescription: eventDescription
+            };
+        
+            // Send data to GCF (which will then forward to Google Sheets)
+            fetch('https://us-west2-divine-clone-398400.cloudfunctions.net/function-1', {  // Replace <YOUR-GCF-URL> with the actual URL of your deployed GCF
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(eventData),  // Convert the JSON object to a string
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch((error) => console.error('Error:', error));
+        }
+        
+        function startPollingForEvents() {
+            // Set up interval to poll every 10 seconds (adjust time as needed)
+            setInterval(fetchAndDisplayEvents, 500); // 500 milliseconds = .5 seconds
+        }
+    
+        function fetchAndDisplayEvents() {
+            const gcfUrl = 'https://us-west2-divine-clone-398400.cloudfunctions.net/function-2';
+            
+            fetch(gcfUrl)
+                .then(response => {
+                    // Check if the response is successful (status code 200)
+                    if (response.ok) {
+                        // Parse and return the JSON data
+                        return response.json();
+                    } else {
+                        // If there's an error, log it and return null
+                        console.error('Error fetching event data:', response.statusText);
+                        return null;
+                    }
+                })
+                .then(data => {
+                    // If there's data, display the events
+                    if (data) {
+                        displayEvents(data);
+                    }
+                })
+                .catch(error => console.error('Error fetching event data:', error));
+        }
+    
+        function displayEvents(events) {
+            const eventsDisplay = document.getElementById('events-display');
+            eventsDisplay.innerHTML = ''; // Clear previous events if any
+        
+            events.forEach(event => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'event-card';
+        
+                // Check if imageUrl exists and is not empty
+                if (event.imageUrl && event.imageUrl.trim() !== '') {
+                    const link = document.createElement('a');
+                    link.href = event.redirectUrl || '#'; // Replace '#' with a default URL if necessary
+                    link.target = '_blank'; // Open in a new tab
+        
+                    const eventImage = document.createElement('img');
+                    eventImage.src = event.imageUrl;
+                    eventImage.alt = event.eventName; // Use event name as alt text
+        
+                    link.appendChild(eventImage);
+                    eventCard.appendChild(link);
+                }
+        
+                const eventName = document.createElement('h3');
+                eventName.textContent = event.eventName;
+                eventCard.appendChild(eventName);
+        
+                const eventDate = document.createElement('p');
+                eventDate.textContent = formatDate(event.eventDate); // Assuming you have a function to format date
+                eventCard.appendChild(eventDate);
+        
+                const eventLocation = document.createElement('p');
+                eventLocation.textContent = event.eventLocation;
+                eventCard.appendChild(eventLocation);
+        
+                const eventDescription = document.createElement('p');
+                eventDescription.textContent = event.eventDescription;
+                eventCard.appendChild(eventDescription);
+        
+                eventsDisplay.appendChild(eventCard);
+            });
+        }
+        
+        
+        // Helper function to format the date
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toISOString().split('T')[0]; // Extracts the YYYY-MM-DD part of the ISO string
+        }
+
+        function showForm(formId) {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('forgot-password-form').style.display = 'none';
+        
+            document.getElementById(formId).style.display = 'block';
+        }
+        
+        function login() {
+            // Placeholder for login logic
+            alert('Login logic not implemented');
+        }
+        
+        function register() {
+            // Placeholder for registration logic
+            alert('Registration logic not implemented');
+        }
+        
+        function resetPassword() {
+            // Placeholder for password reset logic
+            alert('Password reset logic not implemented');
+        }
+
+        function toggleLoginForm() {
+            var form = document.getElementById('login-form');
+            if (form.style.display === 'none' || form.style.display === '') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+        
+        function adjustTextSize(size) {
+            const root = document.documentElement;
+            let currentSize = parseFloat(getComputedStyle(root).fontSize);
+        
+            if (size === 'larger') {
+                root.style.fontSize = (currentSize + 1) + 'px';
+            } else if (size === 'smaller') {
+                root.style.fontSize = (currentSize - 1) + 'px';
+            }
+        }
+        
+        function adjustContrast() {
+            document.body.classList.toggle('high-contrast');
+        }        
+        
+        function submitFeedback() {
+            const feedback = document.getElementById('feedback').value;
+        
+            fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-3', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ feedback: feedback })
+            }).then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            }).then(data => {
+                console.log('Feedback submitted:', data);
+                // Handle successful submission
+            }).catch(error => {
+                console.error('Error:', error);
+                // Handle error
+            });
+        
+            document.getElementById('feedback').value = ''; // Clear the form
+            return false; // Prevent default form submission
+        }
+
+        function resizeImagesToFitCards() {
+            const cards = document.querySelectorAll('.event-card');
+            cards.forEach(card => {
+                const cardWidth = card.offsetWidth;
+                const images = card.querySelectorAll('img');
+                images.forEach(img => {
+                    img.style.width = cardWidth + 'px';
+                    img.style.height = 'auto';
+                });
+            });
+        }        
+        
+    // Load the default page and resize images
+    window.onload = function() {
+        initMap(); // Now it's safe to call initMap
+        loadPage('default');
+        startPollingForEvents();
+        resizeImagesToFitCards(); // Resize images on page load
+    };
+            
+    window.onresize = resizeImagesToFitCards;
     
     </script>
+    <!-- Google Maps API at the bottom to ensure page is loaded before everything executes -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places,geometry&callback=initMap"></script>
+    
+    <footer>
+        <ul id="footer-links">
+            <li><a href="#" onclick="loadPage('accessibility'); return false;">Accessibility</a></li>
+            <li><a href="#" onclick="loadPage('contact'); return false;">Contact Us</a></li>
+            <li><a href="#" onclick="loadPage('feedback'); return false;">Feedback</a></li>
+        </ul>
+    </footer>
+    
 </body>
 
 </html>
