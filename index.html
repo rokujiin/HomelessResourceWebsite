@@ -70,17 +70,7 @@
             padding: 40px;
         }
         
-        section h1, section h2, section h3, section p, section a, section input, section button {
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
-        }
-        
-        section h2 {
-            background-color: rgba(255, 255, 255, 0.3);  /* Semi-transparent white background */
-            padding: 5px 10px;
-            display: inline-block; /* Makes the background only as wide as the text */
-            border-radius: 5px;
-        }
-        
+
         button {
             background-color: #1a73e8; /* Google Blue */
             border: none;
@@ -295,12 +285,23 @@
             max-width: 100%;
             height: auto;
             display: block; /* This ensures images are block level and do not have extra space below them */
-        }        
+        }
+        
+        .enhanced-readability {
+            background-color: rgba(255, 255, 255, 0.7); /* Translucent white background */
+            padding: 10px; /* Adds some padding around the text */
+            border-radius: 5px; /* Optional: Rounded corners */
+            filter: invert(100%); /* Inverts the color of the content */
+        }
+
+        
+        
         
     </style>
 </head>
 
 <body>
+
         <div id="main-background"></div>    
     <header>
         <!-- enables users to click on main header to go to main page, the community bulletin -->
@@ -575,6 +576,7 @@
 
                     case 'accessibility':
                     section.innerHTML = `
+                    <div class="enhanced-readability">
                         <h2>Accessibility Options</h2>
                         <p>Adjust the website settings for better accessibility:</p>
                         <button onclick="adjustTextSize('larger')">Larger Text</button>
@@ -586,6 +588,7 @@
         
                 case 'contact':
                     section.innerHTML = `
+                    <div class="enhanced-readability">
                         <h2>Contact Us</h2>
                         <p>Feel free to reach out to us:</p>
                         <p>Email: contact@example.com</p>
@@ -596,6 +599,7 @@
         
                 case 'feedback':
                     section.innerHTML = `
+                    <div class="enhanced-readability">
                         <h2>Feedback</h2>
                         <p>We appreciate your feedback to improve our website:</p>
                         <form id="feedback-form" onsubmit="submitFeedback(); return false;">
