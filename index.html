@@ -840,15 +840,14 @@
                 alert('Please fill in all fields.');
                 return;
             }
-            var hashedPassword = CryptoJS.SHA256(password).toString();
-        
+
             // Create a user object
             var user = {
                 action: 'register',
                 name: name,
                 email: email,
-                hashedPassword: hashedPassword
-              };
+                password: password // Send plain password
+              };              
         
             // Send data to a Google Cloud Function (which will then forward to Google Sheets)
             fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4', { 
