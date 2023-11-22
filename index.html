@@ -800,39 +800,76 @@
             document.getElementById(formId).style.display = 'block';
         }
         
-function login() {
-    var email = document.getElementById('login-email').value;
-    var password = document.getElementById('login-password').value;
+        function login() {
+            var email = document.getElementById('login-email').value;
+            var password = document.getElementById('login-password').value;
 
-    // Sending a request to Google Cloud Function
-    fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4', { 
-        method: 'POST',
-        body: JSON.stringify({ email: email, password: password }),
-        headers: { 'Content-Type': 'application/json' }
-    })
-    .then(response => response.text())
-    .then(data => {
-        if (data === 'Login successful') {
-            // Handle successful login
-            alert('Logged in successfully');
-            isLoggedIn = true; // Set login status to true
-            loadPage('community-events'); // Redirect to community events page
-        } else {
-            // Handle login failure
-            alert('Login failed: Invalid credentials');
-            isLoggedIn = false; // Set login status to false
+            // Sending a request to Google Cloud Function
+            fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4', { 
+                method: 'POST',
+                body: JSON.stringify({ email: email, password: password }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data === 'Login successful') {
+                    // Handle successful login
+                    alert('Logged in successfully');
+                    isLoggedIn = true; // Set login status to true
+                    loadPage('community-events'); // Redirect to community events page
+                } else {
+                    // Handle login failure
+                    alert('Login failed: Invalid credentials');
+                    isLoggedIn = false; // Set login status to false
+                }
+            })
+            .catch(error => {
+                console.error('Error during login:', error);
+                isLoggedIn = false; // Set login status to false
+            });
         }
-    })
-    .catch(error => {
-        console.error('Error during login:', error);
-        isLoggedIn = false; // Set login status to false
-    });
-}
-
         
         function register() {
-            // Placeholder for registration logic
-            alert('Registration logic not implemented');
+            // Retrieve user input
+            var name = document.getElementById('register-name').value;
+            var email = document.getElementById('register-email').value;
+            var password = document.getElementById('register-password').value;
+        
+            // Validate input (basic example)
+            if (!name || !email || !password) {
+                alert('Please fill in all fields.');
+                return;
+            }
+        
+            // Create a user object
+            var user = {
+                name: name,
+                email: email,
+                password: password
+            };
+        
+            // Send data to a Google Cloud Function (which will then forward to Google Sheets)
+            fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4', { 
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user)  // Convert the user object to a JSON string
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Registration successful');
+                    // Additional actions on successful registration (e.g., redirect or update UI)
+                } else {
+                    alert('Registration failed: ' + data.message);
+                    // Handle registration failure
+                }
+            })
+            .catch(error => {
+                console.error('Error during registration:', error);
+                // Handle network or other errors
+            });
         }
         
         function resetPassword() {
@@ -932,14 +969,14 @@ function login() {
         }
         
     // Load the default page and resize images
-    window.onload = function() {
-        initMap(); // Now it's safe to call initMap
-        loadPage('default');
-        startPollingForEvents();
-        resizeImagesToFitCards(); // Resize images on page load
-    };
-            
-    window.onresize = resizeImagesToFitCards;
+        window.onload = function() {
+            initMap(); // Now it's safe to call initMap
+            loadPage('default');
+            startPollingForEvents();
+            resizeImagesToFitCards(); // Resize images on page load
+        };
+                
+        window.onresize = resizeImagesToFitCards;
     
     </script>
     <!-- Google Maps API at the bottom to ensure page is loaded before everything executes -->
