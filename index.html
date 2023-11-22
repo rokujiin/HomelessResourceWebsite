@@ -830,48 +830,50 @@
         }
         
         function register() {
-            // Retrieve user input
             var name = document.getElementById('register-name').value;
             var email = document.getElementById('register-email').value;
             var password = document.getElementById('register-password').value;
         
-            // Validate input (basic example)
             if (!name || !email || !password) {
                 alert('Please fill in all fields.');
                 return;
             }
-
-            // Create a user object
+        
             var user = {
                 action: 'register',
                 name: name,
                 email: email,
-                password: password // Send plain password
-              };              
+                password: password
+            };
         
-            // Send data to a Google Cloud Function (which will then forward to Google Sheets)
-            fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4', { 
+            fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(user)  // Convert the user object to a JSON string
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(user)
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    // Handle HTTP errors
+                    throw new Error('Network response was not ok. Status: ' + response.status);
+                }
+                return response.json();
+            })
             .then(data => {
-                if (data.success) {
+                if (data.message === 'Registration successful') {
                     alert('Registration successful');
-                    // Additional actions on successful registration (e.g., redirect or update UI)
+                    // Additional actions on successful registration
                 } else {
                     alert('Registration failed: ' + data.message);
                     // Handle registration failure
                 }
             })
             .catch(error => {
+                // Handle network errors and errors thrown from response handling
                 console.error('Error during registration:', error);
-                // Handle network or other errors
+                alert('An error occurred: ' + error.message);
             });
         }
+        
         
         function resetPassword() {
             // Placeholder for password reset logic
