@@ -685,7 +685,7 @@
             };
         
             // Send data to GCF (which will then forward to Google Sheets)
-            fetch('https://us-west2-divine-clone-398400.cloudfunctions.net/function-1', {  // Replace <YOUR-GCF-URL> with the actual URL of your deployed GCF
+            fetch('https://us-west2-divine-clone-398400.cloudfunctions.net/function-1', { 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -753,7 +753,7 @@
                 eventCard.appendChild(eventName);
         
                 const eventDate = document.createElement('p');
-                eventDate.textContent = formatDate(event.eventDate); // Assuming you have a function to format date
+                eventDate.textContent = formatDate(event.eventDate); // Assuming a function to format date
                 eventCard.appendChild(eventDate);
         
                 const eventLocation = document.createElement('p');
@@ -784,9 +784,30 @@
         }
         
         function login() {
-            // Placeholder for login logic
-            alert('Login logic not implemented');
-        }
+            var email = document.getElementById('login-email').value;
+            var password = document.getElementById('login-password').value;
+          
+            // Sending a request to Google Cloud Function
+            fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4', { 
+              method: 'POST',
+              body: JSON.stringify({ email: email, password: password }),
+              headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.text())
+            .then(data => {
+              if (data === 'Login successful') {
+                // Handle successful login
+                alert('Logged in successfully');
+                // Redirect to another page or perform other actions
+              } else {
+                // Handle login failure
+                alert('Login failed: Invalid credentials');
+              }
+            })
+            .catch(error => {
+              console.error('Error during login:', error);
+            });
+          }
         
         function register() {
             // Placeholder for registration logic
@@ -859,7 +880,7 @@
                     img.style.height = 'auto';
                 });
             });
-        }        
+        }
         
     // Load the default page and resize images
     window.onload = function() {
