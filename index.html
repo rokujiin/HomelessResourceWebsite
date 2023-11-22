@@ -369,6 +369,7 @@
 
     <!-- JavaScript code -->
     <script>
+        let isLoggedIn = false; // Set to true if user is logged in
         let markers = [];
         let map;
         // this will intitiate the map right on Sacramento just as a starting point
@@ -623,20 +624,36 @@
                     break;
                 
                 case 'community-events':
-                joinUsBtn.style.display = 'none'; // Hide the join us button
-                    section.innerHTML = `
-                        <h2>Community Events</h2>
-                        <div id="community-events-login-form" class="form-container">
-                            <h2>Login</h2>
-                            <input type="email" id="community-events-login-email" placeholder="Email">
-                            <input type="password" id="community-events-login-password" placeholder="Password">
-                            <button onclick="communityEventsLogin()">Login</button>
-                            <p><a href="#" onclick="showForm('community-events-register-form')">Create an Account</a></p>
-                            <p><a href="#" onclick="showForm('community-events-forgot-password-form')">Forgot Password?</a></p>
-                        </div>
-                        <!-- Add more HTML for Community Events page content -->
-                    `;
-                break;
+                    if (isLoggedIn) {
+                        section.innerHTML = `
+                            <h2>Community Events</h2>
+                            <!-- Event submission form for logged-in users -->
+                            <div id="events-form">
+                                <h2>Want to contribute?</h2>
+                                <h2>Submit a Community Event!</h2>
+                                <input type="text" id="event-name" placeholder="Event Name" required>
+                                <input type="date" id="event-date" required>
+                                <input type="text" id="event-location" placeholder="Event Location" required>
+                                <textarea id="event-description" placeholder="Event Description" required></textarea>
+                                <button onclick="submitEvent()">Submit Event</button>
+                            </div>
+                        `;
+                    } else {
+                        section.innerHTML = `
+                            <h2>Community Events</h2>
+                            <p>Please log in to submit community events.</p>
+                            <!-- Login Form for Non-Logged-In Users -->
+                            <div id="community-events-login-form" class="form-container">
+                                <h2>Login</h2>
+                                <input type="email" id="community-events-login-email" placeholder="Email">
+                                <input type="password" id="community-events-login-password" placeholder="Password">
+                                <button onclick="communityEventsLogin()">Login</button>
+                                <p><a href="#" onclick="showForm('community-events-register-form')">Create an Account</a></p>
+                                <p><a href="#" onclick="showForm('community-events-forgot-password-form')">Forgot Password?</a></p>
+                            </div>
+                        `;
+                    }
+                    break;
                 
         
                 default:
@@ -783,31 +800,35 @@
             document.getElementById(formId).style.display = 'block';
         }
         
-        function login() {
-            var email = document.getElementById('login-email').value;
-            var password = document.getElementById('login-password').value;
-          
-            // Sending a request to Google Cloud Function
-            fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4', { 
-              method: 'POST',
-              body: JSON.stringify({ email: email, password: password }),
-              headers: { 'Content-Type': 'application/json' }
-            })
-            .then(response => response.text())
-            .then(data => {
-              if (data === 'Login successful') {
-                // Handle successful login
-                alert('Logged in successfully');
-                // Redirect to another page or perform other actions
-              } else {
-                // Handle login failure
-                alert('Login failed: Invalid credentials');
-              }
-            })
-            .catch(error => {
-              console.error('Error during login:', error);
-            });
-          }
+function login() {
+    var email = document.getElementById('login-email').value;
+    var password = document.getElementById('login-password').value;
+
+    // Sending a request to Google Cloud Function
+    fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4', { 
+        method: 'POST',
+        body: JSON.stringify({ email: email, password: password }),
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => response.text())
+    .then(data => {
+        if (data === 'Login successful') {
+            // Handle successful login
+            alert('Logged in successfully');
+            isLoggedIn = true; // Set login status to true
+            loadPage('community-events'); // Redirect to community events page
+        } else {
+            // Handle login failure
+            alert('Login failed: Invalid credentials');
+            isLoggedIn = false; // Set login status to false
+        }
+    })
+    .catch(error => {
+        console.error('Error during login:', error);
+        isLoggedIn = false; // Set login status to false
+    });
+}
+
         
         function register() {
             // Placeholder for registration logic
@@ -879,6 +900,34 @@
                     img.style.width = cardWidth + 'px';
                     img.style.height = 'auto';
                 });
+            });
+        }
+
+        function communityEventsLogin() {
+            var email = document.getElementById('community-events-login-email').value;
+            var password = document.getElementById('community-events-login-password').value;
+        
+            // Sending a request to Google Cloud Function for login
+            fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4', {
+                method: 'POST',
+                body: JSON.stringify({ email: email, password: password }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data === 'Login successful') {
+                    // Handle successful login
+                    isLoggedIn = true; // Update global login status
+                    alert('Logged in successfully');
+                    loadPage('community-events'); // Reload the community-events page
+                } else {
+                    // Handle login failure
+                    isLoggedIn = false; // Ensure login status is false
+                    alert('Login failed: Invalid credentials');
+                }
+            })
+            .catch(error => {
+                console.error('Error during login:', error);
             });
         }
         
