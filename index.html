@@ -70,9 +70,8 @@
             padding: 40px;
         }
         
-
         button {
-            background-color: #1a73e8; /* Google Blue */
+            background-color: #E0B64D; /* CSU Gold */
             border: none;
             padding: 10px 20px;
             border-radius: 4px;
@@ -83,8 +82,9 @@
         }
         
         button:hover {
-            background-color: #155dc4; /* Darker shade for hover */
+            background-color: #d3a537; /* Slightly darker shade of CSU Gold for hover */
         }
+        
         
         #map {
             height: 400px;
@@ -234,13 +234,15 @@
         }
 
         #join-us-btn {
+            display: block; /* Make the button a block element */
+            margin: 10px auto; /* Vertical margins remain 10px, horizontal margins are auto */
+            text-align: center; 
             background-color: transparent;
             border: none;
             color: white;
             font-family: 'Roboto', sans-serif;
             font-size: 16px;
             cursor: pointer;
-            margin-top: 10px;
         }
         
         #join-us-btn span {
@@ -344,6 +346,7 @@
             <li><a href="#" onclick="loadPage('food-banks')">Food Banks</a></li>
             <li><a href="#" onclick="loadPage('healthcare')">Healthcare</a></li>
             <li><a href="#" onclick="loadPage('employment-resources')">Employment Resources</a></li>
+            <li><a href="#" onclick="loadPage('community-events')">Community Events</a></li>
         </ul>
     </nav>
     
@@ -467,10 +470,12 @@
         // Load the page content based on the page name, will be called when
         // the user clicks on a nav link
         function loadPage(page) {
+            const joinUsBtn = document.getElementById('join-us-btn'); // Get the join us button
             const section = document.querySelector('section');
-        
+
             switch(page) {
                 case 'home':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
                     section.innerHTML = `
                         <div id="events-display">
                             <h2>Upcoming Community Events</h2>
@@ -491,6 +496,7 @@
                 // Add other pages here using 'case pageName:, copy the code below'
                 // and replace the content with the new page content
                 case 'shelters':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
                     section.innerHTML = `
                         <h2>Shelters</h2>
                         <p><span class="highlight-text">Enter your location to find shelters near you:</span></p>
@@ -512,6 +518,7 @@
                     break;
         
                 case 'food-banks':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
                     section.innerHTML = `
                         <h2>Food Banks</h2>
                         <p><span class="highlight-text">Enter your location to find food banks near you:</span></p>
@@ -533,6 +540,7 @@
                     break;
         
                 case 'healthcare':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
                     section.innerHTML = `
                         <h2>Healthcare</h2>
                         <p><span class="highlight-text">Enter your location to find healthcare services near you:</span></p>
@@ -554,6 +562,7 @@
                     break
         
                 case 'employment-resources':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
                     section.innerHTML = `
                         <h2>Employment Resources</h2>
                         <p><span class="highlight-text">Enter your location to find employment resources near you:</span></p>
@@ -575,6 +584,7 @@
                     break;
 
                     case 'accessibility':
+                    joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
                     section.innerHTML = `
                     <div class="enhanced-readability">
                         <h2>Accessibility Options</h2>
@@ -587,6 +597,7 @@
                     break;
         
                 case 'contact':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
                     section.innerHTML = `
                     <div class="enhanced-readability">
                         <h2>Contact Us</h2>
@@ -598,6 +609,7 @@
                     break;
         
                 case 'feedback':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
                     section.innerHTML = `
                     <div class="enhanced-readability">
                         <h2>Feedback</h2>
@@ -609,8 +621,26 @@
                         </form>
                     `;
                     break;
+                
+                case 'community-events':
+                joinUsBtn.style.display = 'none'; // Hide the join us button
+                    section.innerHTML = `
+                        <h2>Community Events</h2>
+                        <div id="community-events-login-form" class="form-container">
+                            <h2>Login</h2>
+                            <input type="email" id="community-events-login-email" placeholder="Email">
+                            <input type="password" id="community-events-login-password" placeholder="Password">
+                            <button onclick="communityEventsLogin()">Login</button>
+                            <p><a href="#" onclick="showForm('community-events-register-form')">Create an Account</a></p>
+                            <p><a href="#" onclick="showForm('community-events-forgot-password-form')">Forgot Password?</a></p>
+                        </div>
+                        <!-- Add more HTML for Community Events page content -->
+                    `;
+                break;
+                
         
                 default:
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
                     section.innerHTML = `
                         <div id="events-display">
                             <h2>Upcoming Community Events</h2>
