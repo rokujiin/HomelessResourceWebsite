@@ -803,23 +803,23 @@
         function login() {
             var email = document.getElementById('login-email').value;
             var password = document.getElementById('login-password').value;
-
+        
             // Sending a request to Google Cloud Function
-            fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4', { 
+            fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4', {
                 method: 'POST',
-                body: JSON.stringify({ email: email, password: password }),
+                body: JSON.stringify({ action: 'login', email: email, password: password }),
                 headers: { 'Content-Type': 'application/json' }
             })
-            .then(response => response.text())
+            .then(response => response.json()) // Changed to response.json() to handle JSON response
             .then(data => {
-                if (data === 'Login successful') {
+                if (data.message === 'Login successful') { // Check the message property of the JSON response
                     // Handle successful login
                     alert('Logged in successfully');
                     isLoggedIn = true; // Set login status to true
                     loadPage('community-events'); // Redirect to community events page
                 } else {
                     // Handle login failure
-                    alert('Login failed: Invalid credentials');
+                    alert(data.message); // Use the message from the JSON response
                     isLoggedIn = false; // Set login status to false
                 }
             })
@@ -828,6 +828,9 @@
                 isLoggedIn = false; // Set login status to false
             });
         }
+        
+        
+        
         
         function register() {
             // Retrieve user input
