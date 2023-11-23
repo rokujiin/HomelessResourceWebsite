@@ -830,49 +830,20 @@
         }
         
         function register() {
-            var name = document.getElementById('register-name').value;
-            var email = document.getElementById('register-email').value;
-            var password = document.getElementById('register-password').value;
-        
-            if (!name || !email || !password) {
-                alert('Please fill in all fields.');
-                return;
-            }
-        
-            var user = {
-                action: 'register',
-                name: name,
-                email: email,
-                password: password
-            };
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
         
             fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(user)
+                body: JSON.stringify({ name, email, password })
             })
-            .then(response => {
-                if (!response.ok) {
-                    // Handle HTTP errors
-                    throw new Error('Network response was not ok. Status: ' + response.status);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.message === 'Registration successful') {
-                    alert('Registration successful');
-                    // Additional actions on successful registration
-                } else {
-                    alert('Registration failed: ' + data.message);
-                    // Handle registration failure
-                }
-            })
-            .catch(error => {
-                // Handle network errors and errors thrown from response handling
-                console.error('Error during registration:', error);
-                alert('An error occurred: ' + error.message);
-            });
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => console.error('Error:', error));
         }
+
         
         
         function resetPassword() {
