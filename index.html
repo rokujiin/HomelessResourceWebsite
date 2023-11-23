@@ -834,7 +834,7 @@
             const email = document.getElementById('register-email').value;
             const password = document.getElementById('register-password').value;
         
-            fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4', {
+            fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email, password })
