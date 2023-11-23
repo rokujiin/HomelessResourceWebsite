@@ -710,7 +710,10 @@
                 body: JSON.stringify(eventData),  // Convert the JSON object to a string
             })
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => {
+                console.log(data);
+                clearFormInputs(); // Clear form inputs after submitting an event
+            })
             .catch((error) => console.error('Error:', error));
         }
         
@@ -793,6 +796,7 @@
         }
 
         function showForm(formId) {
+            clearFormInputs();
             document.getElementById('login-form').style.display = 'none';
             document.getElementById('register-form').style.display = 'none';
             document.getElementById('forgot-password-form').style.display = 'none';
@@ -812,7 +816,8 @@
             })
             .then(response => response.json()) // Changed to response.json() to handle JSON response
             .then(data => {
-                if (data.message === 'Login successful') { // Check the message property of the JSON response
+                if (data.message === 'Login successful') {
+                    clearFormInputs(); // Check the message property of the JSON response
                     // Handle successful login
                     alert('Logged in successfully');
                     isLoggedIn = true; // Set login status to true
@@ -840,7 +845,10 @@
                 body: JSON.stringify({ name, email, password })
             })
             .then(response => response.json())
-            .then(data => alert(data.message))
+            .then(data => {
+                alert(data.message);
+                clearFormInputs(); // Clear form inputs after registration attempt
+            })
             .catch(error => console.error('Error:', error));
         }
 
@@ -939,6 +947,12 @@
             })
             .catch(error => {
                 console.error('Error during login:', error);
+            });
+        }
+
+        function clearFormInputs() {
+            document.querySelectorAll('.form-container input, .form-container textarea').forEach(input => {
+                input.value = '';
             });
         }
         
