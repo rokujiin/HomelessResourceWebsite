@@ -808,12 +808,21 @@
             var email = document.getElementById('login-email').value;
             var password = document.getElementById('login-password').value;
         
+            // Optional: Add loading indicator or disable the login button here
+        
             fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/userAuthentication/loginUser', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, password: password })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    // Handle HTTP errors
+                    throw new Error(`Server returned status: ${response.status}`);
+                }
+            })
             .then(data => {
                 if (data.message === 'Login successful') {
                     // Handle successful login
@@ -829,8 +838,13 @@
             .catch(error => {
                 console.error('Error during login:', error);
                 isLoggedIn = false;
+                // Optional: Display a user-friendly error message
+            })
+            .finally(() => {
+                // Optional: Remove loading indicator or enable the login button here
             });
         }
+
 
         
         function register() {
