@@ -805,8 +805,16 @@
         }
         
         function login() {
-            var email = document.getElementById('login-email').value;
-            var password = document.getElementById('login-password').value;
+            var email, password;
+        
+            // Check which login form is currently active
+            if (document.getElementById('login-form').style.display !== 'none') {
+                email = document.getElementById('login-email').value;
+                password = document.getElementById('login-password').value;
+            } else {
+                email = document.getElementById('community-events-login-email').value;
+                password = document.getElementById('community-events-login-password').value;
+            }
         
             // Optional: Add loading indicator or disable the login button here
         
@@ -849,9 +857,18 @@
 
         
         function register() {
-            const name = document.getElementById('register-name').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
+            var name, email, password;
+        
+            // Check which registration form is currently active
+            if (document.getElementById('register-form').style.display !== 'none') {
+                name = document.getElementById('register-name').value;
+                email = document.getElementById('register-email').value;
+                password = document.getElementById('register-password').value;
+            } else {
+                name = document.getElementById('community-events-register-name').value;
+                email = document.getElementById('community-events-register-email').value;
+                password = document.getElementById('community-events-register-password').value;
+            }
         
             fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-4/register', {
                 method: 'POST',
@@ -869,9 +886,19 @@
         
         
         function resetPassword() {
-            // Placeholder for password reset logic
-            alert('Password reset logic not implemented');
+            var email;
+        
+            // Check which reset password form is currently active
+            if (document.getElementById('forgot-password-form').style.display !== 'none') {
+                email = document.getElementById('forgot-password-email').value;
+            } else {
+                email = document.getElementById('community-events-forgot-password-email').value;
+            }
+        
+            // Add logic for password reset using the email variable
+            // ...
         }
+
 
         function toggleLoginForm() {
             var form = document.getElementById('login-form');
