@@ -474,6 +474,12 @@
             const joinUsBtn = document.getElementById('join-us-btn'); // Get the join us button
             const section = document.querySelector('section');
 
+            if (page === 'community-events') {
+                joinUsBtn.style.display = 'none'; // Hide the button
+            } else {
+                joinUsBtn.style.display = 'block'; // Show the button for all other pages
+            }
+
             switch(page) {
                 case 'home':
                 joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
