@@ -638,19 +638,18 @@
                         section.innerHTML = `
                             <h2>Community Events</h2>
                             <p>Please log in to submit community events.</p>
-                            <!-- Login Form for Non-Logged-In Users -->
                             <div id="community-events-login-form" class="form-container">
                                 <h2>Login</h2>
                                 <input type="email" id="community-events-login-email" placeholder="Email">
                                 <input type="password" id="community-events-login-password" placeholder="Password">
                                 <button onclick="login()">Login</button>
-                                <p><a href="#" onclick="showForm('community-events-register-form')">Create an Account</a></p>
-                                <p><a href="#" onclick="showForm('community-events-forgot-password-form')">Forgot Password?</a></p>
+                                <p><a href="#" onclick="showForm('register-form')">Create an Account</a></p>
+                                <p><a href="#" onclick="showForm('forgot-password-form')">Forgot Password?</a></p>
                             </div>
                         `;
                     }
                     break;
-                
+                                
         
                 default:
                 joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
