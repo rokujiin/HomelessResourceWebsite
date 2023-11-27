@@ -604,9 +604,8 @@
                     <div class="enhanced-readability">
                         <h2>Contact Us</h2>
                         <p>Feel free to reach out to us:</p>
-                        <p id="contact-email">Email: <span style="cursor:pointer;color:blue;">triplepjarm@gmail.com</span></p>
-                        <p id="contact-facebook">Facebook: <span style="cursor:pointer;color:blue;">Triple PJarm</span></p>
-                        <!-- Include a contact form if needed -->
+                        <p>Email: <span id="contact-email" style="cursor:pointer;color:blue;">triplepjarm@gmail.com</span></p>
+                        <p>Facebook: <span id="contact-facebook" style="cursor:pointer;color:blue;">Triple PJarm</span></p>
                     </div>
                     `;
                     break;
@@ -970,21 +969,22 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            const contactEmail = document.getElementById('contact-email');
-            const contactFacebook = document.getElementById('contact-facebook');
-        
-            if (contactEmail) {
-                contactEmail.addEventListener('click', function () {
+            const contactEmailSpan = document.getElementById('contact-email');
+            const contactFacebookSpan = document.getElementById('contact-facebook');
+            
+            if (contactEmailSpan) {
+                contactEmailSpan.addEventListener('click', function () {
                     window.open('mailto:triplepjarm@gmail.com');
                 });
             }
-        
-            if (contactFacebook) {
-                contactFacebook.addEventListener('click', function () {
+            
+            if (contactFacebookSpan) {
+                contactFacebookSpan.addEventListener('click', function () {
                     window.open('https://www.facebook.com/profile.php?id=61553158317877');
                 });
             }
         });
+        
         
     // Load the default page and resize images
         window.onload = function() {
