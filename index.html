@@ -806,7 +806,7 @@
             fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-1', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                credentials: 'include', // Or 'same-origin' as required
+                // credentials: 'include', // Or 'same-origin' as required
                 body: JSON.stringify({ email: email, password: password })
             })
             .then(response => {
