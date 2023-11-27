@@ -827,6 +827,7 @@
                 }
             })
             .then(data => {
+                console.log("Response from GCF:", data);
                 if (data.message === 'Login successful') {
                     alert('Logged in successfully');
                     isLoggedIn = true;
