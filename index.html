@@ -895,6 +895,7 @@
         
         function resetPassword() {
             var email;
+            const email = document.getElementById('reset-password-email').value;
         
             // Check which reset password form is currently active
             if (document.getElementById('forgot-password-form').style.display !== 'none') {
@@ -902,6 +903,8 @@
             } else {
                 email = document.getElementById('community-events-forgot-password-email').value;
             }
+
+            alert(`A password reset link has been sent to ${email}. Check your email to reset your password.`);
         
             // Add logic for password reset using the email variable
             // ...
