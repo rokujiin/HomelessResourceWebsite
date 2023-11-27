@@ -593,15 +593,16 @@
                     `;
                     break;
         
-                case 'contact':
-                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+                    case 'contact':
+                    joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
                     section.innerHTML = `
                     <div class="enhanced-readability">
                         <h2>Contact Us</h2>
                         <p>Feel free to reach out to us:</p>
-                        <p>Email: contact@example.com</p>
-                        <p>Phone: 123-456-7890</p>
+                        <p id="contact-email">Email: <span style="cursor:pointer;color:blue;">triplepjarm@gmail.com</span></p>
+                        <p id="contact-facebook">Facebook: <span style="cursor:pointer;color:blue;">Triple PJarm</span></p>
                         <!-- Include a contact form if needed -->
+                    </div>
                     `;
                     break;
         
@@ -962,6 +963,23 @@
                 input.value = '';
             });
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactEmail = document.getElementById('contact-email');
+            const contactFacebook = document.getElementById('contact-facebook');
+        
+            if (contactEmail) {
+                contactEmail.addEventListener('click', function () {
+                    window.open('mailto:triplepjarm@gmail.com');
+                });
+            }
+        
+            if (contactFacebook) {
+                contactFacebook.addEventListener('click', function () {
+                    window.open('https://www.facebook.com/profile.php?id=61553158317877');
+                });
+            }
+        });
         
     // Load the default page and resize images
         window.onload = function() {
