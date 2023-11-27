@@ -312,10 +312,6 @@
             filter: invert(100%); /* Inverts the color of the content */
         }
 
-        .black-text h2 {
-            color: black;
-        }
-
         
         
         
@@ -327,7 +323,7 @@
         <div id="main-background"></div>    
     <header>
         <!-- enables users to click on main header to go to main page, the community bulletin -->
-        <h1><a id="main-header-link" href="#" onclick="loadPage('default'); return false;">Hornet Homeless Resource Platform</a></h1>
+        <h1><a id="main-header-link" href="#" onclick="loadPage('home'); return false;">Hornet Homeless Resource Platform</a></h1>
         <p>Connecting you with essential resources and support services.</p>
         <button id="join-us-btn" onclick="toggleLoginForm()">Don't have an account? Join us here! <span>here!</span></button>
     </header>
@@ -490,31 +486,31 @@
         }        
         // Load the page content based on the page name, will be called when
         // the user clicks on a nav link
-function loadPage(page) {
-    const joinUsBtn = document.getElementById('join-us-btn'); // Get the join us button
-    const section = document.querySelector('section');
-
-    if (page === 'community-events') {
-        joinUsBtn.style.display = 'none'; // Hide the button
-    } else {
-        joinUsBtn.style.display = 'block'; // Show the button for all other pages
-    }
-
-    switch(page) {
-        case 'home':
-            joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-            section.innerHTML = `
-                <div id="events-display">
+        function loadPage(page) {
+            const joinUsBtn = document.getElementById('join-us-btn'); // Get the join us button
+            const section = document.querySelector('section');
+          
+            if (page === 'community-events') {
+              joinUsBtn.style.display = 'none'; // Hide the button
+            } else {
+              joinUsBtn.style.display = 'block'; // Show the button for all other pages
+            }
+          
+            switch (page) {
+              case 'home':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+                section.innerHTML = `
+                  <div id="events-display">
                     <h2>Upcoming Community Events</h2>
                     <!-- Event cards will be appended here -->
-                </div>
-            `;
-            break;
-
-        case 'shelters':
-            joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-            section.innerHTML = `
-                <div class="white-text-section"> <!-- Added wrapper with the class -->
+                  </div>
+                `;
+                break;
+          
+              case 'shelters':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+                section.innerHTML = `
+                  <div class="white-text-section"> <!-- Added wrapper with the class -->
                     <h2>Shelters</h2>
                     <p><span class="highlight-text">Enter your location to find shelters near you:</span></p>
                     <input type="text" id="address-input" placeholder="Enter street address">
@@ -522,22 +518,22 @@ function loadPage(page) {
                     <div id="map"></div>
                     <button onclick="clearMarkers()">Clear Markers</button>
                     <div id="cards-container">
-                        <div class="card" id="card1"></div>
-                        <div class="card" id="card2"></div>
-                        <div class="card" id="card3"></div>
+                      <div class="card" id="card1"></div>
+                      <div class="card" id="card2"></div>
+                      <div class="card" id="card3"></div>
                     </div>
-                </div>
-            `;
-            setTimeout(() => {
-                initMap();
-                searchShelters();
-            }, 0);
-            break;
-
-        case 'food-banks':
-            joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-            section.innerHTML = `
-                <div class="white-text-section"> <!-- Added wrapper with the class -->
+                  </div>
+                `;
+                setTimeout(() => {
+                  initMap();
+                  searchShelters();
+                }, 0);
+                break;
+          
+              case 'food-banks':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+                section.innerHTML = `
+                  <div class="white-text-section"> <!-- Added wrapper with the class -->
                     <h2>Food Banks</h2>
                     <p><span class="highlight-text">Enter your location to find food banks near you:</span></p>
                     <input type="text" id="address-input" placeholder="Enter street address">
@@ -545,22 +541,22 @@ function loadPage(page) {
                     <div id="map"></div>
                     <button onclick="clearMarkers()">Clear Markers</button>
                     <div id="cards-container">
-                        <div class="card" id="card1"></div>
-                        <div class="card" id="card2"></div>
-                        <div class="card" id="card3"></div>
+                      <div class="card" id="card1"></div>
+                      <div class="card" id="card2"></div>
+                      <div class="card" id="card3"></div>
                     </div>
-                </div>
-            `;
-            setTimeout(() => {
-                initMap();
-                searchFoodBanks();
-            }, 0);
-            break;
-
-        case 'healthcare':
-            joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-            section.innerHTML = `
-                <div class="white-text-section"> <!-- Added wrapper with the class -->
+                  </div>
+                `;
+                setTimeout(() => {
+                  initMap();
+                  searchFoodBanks();
+                }, 0);
+                break;
+          
+              case 'healthcare':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+                section.innerHTML = `
+                  <div class="white-text-section"> <!-- Added wrapper with the class -->
                     <h2>Healthcare</h2>
                     <p><span class="highlight-text">Enter your location to find healthcare services near you:</span></p>
                     <input type="text" id="address-input" placeholder="Enter street address">
@@ -568,22 +564,22 @@ function loadPage(page) {
                     <div id="map"></div>
                     <button onclick="clearMarkers()">Clear Markers</button>
                     <div id="cards-container">
-                        <div class="card" id="card1"></div>
-                        <div class="card" id="card2"></div>
-                        <div class="card" id="card3"></div>
+                      <div class="card" id="card1"></div>
+                      <div class="card" id="card2"></div>
+                      <div class="card" id="card3"></div>
                     </div>
-                </div>
-            `;
-            setTimeout(() => {
-                initMap();
-                searchHealthcare();
-            }, 0);
-            break;
-
-        case 'employment-resources':
-            joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-            section.innerHTML = `
-                <div class="white-text-section"> <!-- Added wrapper with the class -->
+                  </div>
+                `;
+                setTimeout(() => {
+                  initMap();
+                  searchHealthcare();
+                }, 0);
+                break;
+          
+              case 'employment-resources':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+                section.innerHTML = `
+                  <div class="white-text-section"> <!-- Added wrapper with the class -->
                     <h2>Employment Resources</h2>
                     <p><span class="highlight-text">Enter your location to find employment resources near you:</span></p>
                     <input type="text" id="address-input" placeholder="Enter street address">
@@ -591,95 +587,96 @@ function loadPage(page) {
                     <div id="map"></div>
                     <button onclick="clearMarkers()">Clear Markers</button>
                     <div id="cards-container">
-                        <div class="card" id="card1"></div>
-                        <div class="card" id="card2"></div>
-                        <div class="card" id="card3"></div>
+                      <div class="card" id="card1"></div>
+                      <div class="card" id="card2"></div>
+                      <div class="card" id="card3"></div>
                     </div>
-                </div>
-            `;
-            setTimeout(() => {
-                initMap();
-                searchEmploymentResources();
-            }, 0);
-            break;
-
-                    case 'accessibility':
-                    joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                    section.innerHTML = `
-                    <div class="enhanced-readability">
-                        <h2>Accessibility Options</h2>
-                        <p>Adjust the website settings for better accessibility:</p>
-                        <button onclick="adjustTextSize('larger')">Larger Text</button>
-                        <button onclick="adjustTextSize('smaller')">Smaller Text</button>
-                        <button onclick="adjustContrast()">High Contrast</button>
-                        <!-- Add other accessibility features as needed -->
-                    `;
-                    break;
-        
-                    case 'contact':
-                    joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                    section.innerHTML = `
-                    <div class="enhanced-readability">
-                        <h2>Contact Us</h2>
-                        <p>Feel free to reach out to us:</p>
-                        <p>Email: <span id="contact-email" style="cursor:pointer;color:blue;">triplepjarm@gmail.com</span></p>
-                        <p>Facebook: <span id="contact-facebook" style="cursor:pointer;color:blue;">Triple PJarm</span></p>
-                    </div>
-                    `;
-                    break;
-        
-                case 'feedback':
+                  </div>
+                `;
+                setTimeout(() => {
+                  initMap();
+                  searchEmploymentResources();
+                }, 0);
+                break;
+          
+              case 'accessibility':
                 joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                    section.innerHTML = `
-                    <div class="enhanced-readability">
-                        <h2>Feedback</h2>
-                        <p>We appreciate your feedback to improve our website:</p>
-                        <form id="feedback-form" onsubmit="submitFeedback(); return false;">
-                            <label for="feedback">Your Feedback:</label>
-                            <textarea id="feedback" name="feedback" required></textarea>
-                            <button type="submit">Submit Feedback</button>
-                        </form>
-                    `;
-                    break;
-                
-
-                    case 'community-events':
-                    if (isLoggedIn) {
-                        section.innerHTML = `
-                            <div class="white-text-section">
-                                <h2>Community Events</h2>
-                                <!-- Event submission form for logged-in users -->
-                                <div id="events-form" class="black-text"> <!-- Added class -->
-                                    <h2>Want to contribute?</h2>
-                                    <h2>Submit a Community Event!</h2>
-                                    <input type="text" id="event-name" placeholder="Event Name" required>
-                                    <input type="date" id="event-date" required>
-                                    <input type="text" id="event-location" placeholder="Event Location" required>
-                                    <textarea id="event-description" placeholder="Event Description" required></textarea>
-                                    <button onclick="submitEvent()">Submit Event</button>
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        section.innerHTML = `
-                            <div class="white-text-section">
-                                <h2>Community Events</h2>
-                                <p class="highlight-text">Please log in to submit community events.</p>
-                                <div id="community-events-login-form" class="form-container">
-                                    <h2>Login</h2>
-                                    <input type="email" id="community-events-login-email" placeholder="Email">
-                                    <input type="password" id="community-events-login-password" placeholder="Password">
-                                    <button onclick="login()">Login</button>
-                                    <p><a href="#" onclick="showForm('register-form')">Create an Account</a></p>
-                                    <p><a href="#" onclick="showForm('forgot-password-form')">Forgot Password?</a></p>
-                                </div>
-                            </div>
-                        `;
-                    }
-                    break;
-
+                section.innerHTML = `
+                  <div class="enhanced-readability">
+                    <h2>Accessibility Options</h2>
+                    <p>Adjust the website settings for better accessibility:</p>
+                    <button onclick="adjustTextSize('larger')">Larger Text</button>
+                    <button onclick="adjustTextSize('smaller')">Smaller Text</button>
+                    <button onclick="adjustContrast()">High Contrast</button>
+                    <!-- Add other accessibility features as needed -->
+                  </div>
+                `;
+                break;
+          
+              case 'contact':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+                section.innerHTML = `
+                  <div class="enhanced-readability">
+                    <h2>Contact Us</h2>
+                    <p>Feel free to reach out to us:</p>
+                    <p>Email: <span id="contact-email" style="cursor:pointer;color:blue;">triplepjarm@gmail.com</span></p>
+                    <p>Facebook: <span id="contact-facebook" style="cursor:pointer;color:blue;">Triple PJarm</span></p>
+                  </div>
+                `;
+                break;
+          
+              case 'feedback':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+                section.innerHTML = `
+                  <div class="enhanced-readability">
+                    <h2>Feedback</h2>
+                    <p>We appreciate your feedback to improve our website:</p>
+                    <form id="feedback-form" onsubmit="submitFeedback(); return false;">
+                      <label for="feedback">Your Feedback:</label>
+                      <textarea id="feedback" name="feedback" required></textarea>
+                      <button type="submit">Submit Feedback</button>
+                    </form>
+                  </div>
+                `;
+                break;
+          
+              case 'community-events':
+                if (isLoggedIn) {
+                  section.innerHTML = `
+                    <div class="white-text-section">
+                      <h2>Community Events</h2>
+                      <!-- Event submission form for logged-in users -->
+                      <div id="events-form" class="black-text"> <!-- Added class -->
+                        <h2>Want to contribute?</h2>
+                        <h2>Submit a Community Event!</h2>
+                        <input type="text" id="event-name" placeholder="Event Name" required>
+                        <input type="date" id="event-date" required>
+                        <input type="text" id="event-location" placeholder="Event Location" required>
+                        <textarea id="event-description" placeholder="Event Description" required></textarea>
+                        <button onclick="submitEvent()">Submit Event</button>
+                      </div>
+                    </div>
+                  `;
+                } else {
+                  section.innerHTML = `
+                    <div class="white-text-section">
+                      <h2>Community Events</h2>
+                      <p class="highlight-text">Please log in to submit community events.</p>
+                      <div id="community-events-login-form" class="form-container">
+                        <h2>Login</h2>
+                        <input type="email" id="community-events-login-email" placeholder="Email">
+                        <input type="password" id="community-events-login-password" placeholder="Password">
+                        <button onclick="login()">Login</button>
+                        <p><a href="#" onclick="showForm('register-form')">Create an Account</a></p>
+                        <p><a href="#" onclick="showForm('forgot-password-form')">Forgot Password?</a></p>
+                      </div>
+                    </div>
+                  `;
+                }
+                break;
             }
-        }
+          }
+          
         
         // Clear the cards
         function clearCards() {
@@ -1001,7 +998,7 @@ function loadPage(page) {
     // Load the default page and resize images
         window.onload = function() {
             initMap(); // Now it's safe to call initMap
-            loadPage('default');
+            loadPage('home');
             startPollingForEvents();
             resizeImagesToFitCards(); // Resize images on page load
         };
