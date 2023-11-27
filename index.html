@@ -193,10 +193,12 @@
         }
         
         .highlight-text {
-            background-color: rgba(255, 255, 255, 0.7); 
-            padding: 0.5em 1em; /* Provide some space inside the background */
-            border-radius: 5px; /* Rounded corners */
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            color: black; /* Sets text color to black */
         }
+        
         .form-container {
             background-color: #f2f2f2;
             padding: 20px;
@@ -286,7 +288,16 @@
         .high-contrast #main-background {
             display: none; /* Hide the background image */
         }
-        
+
+                /* New class for sections with white text */
+        .white-text-section {
+            color: white; /* Default text color set to white */
+        }
+
+        /* Modify high-contrast class */
+        .high-contrast .white-text-section {
+            color: black; /* Text color changes to black when high contrast is active */
+        }
 
         .event-card img {
             max-width: 100%;
@@ -475,115 +486,118 @@
         }        
         // Load the page content based on the page name, will be called when
         // the user clicks on a nav link
-        function loadPage(page) {
-            const joinUsBtn = document.getElementById('join-us-btn'); // Get the join us button
-            const section = document.querySelector('section');
+function loadPage(page) {
+    const joinUsBtn = document.getElementById('join-us-btn'); // Get the join us button
+    const section = document.querySelector('section');
 
-            if (page === 'community-events') {
-                joinUsBtn.style.display = 'none'; // Hide the button
-            } else {
-                joinUsBtn.style.display = 'block'; // Show the button for all other pages
-            }
+    if (page === 'community-events') {
+        joinUsBtn.style.display = 'none'; // Hide the button
+    } else {
+        joinUsBtn.style.display = 'block'; // Show the button for all other pages
+    }
 
-            switch(page) {
-                case 'home':
-                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                    section.innerHTML = `
-                        <div id="events-display">
-                            <h2>Upcoming Community Events</h2>
-                            <!-- Event cards will be appended here -->
-                        </div>
-                    `;
-                break;
-                // Add other pages here using 'case pageName:, copy the code below'
-                // and replace the content with the new page content
-                case 'shelters':
-                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                    section.innerHTML = `
-                        <h2>Shelters</h2>
-                        <p><span class="highlight-text">Enter your location to find shelters near you:</span></p>
-                        <input type="text" id="address-input" placeholder="Enter street address">
-                        <button onclick="geocodeAddress()">Search</button>
-                        <div id="map"></div>
-                        <button onclick="clearMarkers()">Clear Markers</button>
-                        <!-- Add the card section here -->
-                        <div id="cards-container">
-                            <div class="card" id="card1"></div>
-                            <div class="card" id="card2"></div>
-                            <div class="card" id="card3"></div>
-                        </div>
-                    `;
-                    setTimeout(() => {
-                        initMap();
-                        searchShelters();
-                    }, 0);
-                    break;
-        
-                case 'food-banks':
-                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                    section.innerHTML = `
-                        <h2>Food Banks</h2>
-                        <p><span class="highlight-text">Enter your location to find food banks near you:</span></p>
-                        <input type="text" id="address-input" placeholder="Enter street address">
-                        <button onclick="geocodeAddress()">Search</button>
-                        <div id="map"></div>
-                        <button onclick="clearMarkers()">Clear Markers</button>
-                        <!-- Add the card section here -->
-                        <div id="cards-container">
-                            <div class="card" id="card1"></div>
-                            <div class="card" id="card2"></div>
-                            <div class="card" id="card3"></div>
-                        </div>
-                    `;
-                    setTimeout(() => {
-                        initMap();
-                        searchFoodBanks();
-                    }, 0);
-                    break;
-        
-                case 'healthcare':
-                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                    section.innerHTML = `
-                        <h2>Healthcare</h2>
-                        <p><span class="highlight-text">Enter your location to find healthcare services near you:</span></p>
-                        <input type="text" id="address-input" placeholder="Enter street address">
-                        <button onclick="geocodeAddress()">Search</button>
-                        <div id="map"></div>
-                        <button onclick="clearMarkers()">Clear Markers</button>
-                        <!-- Add the card section here -->
-                        <div id="cards-container">
-                            <div class="card" id="card1"></div>
-                            <div class="card" id="card2"></div>
-                            <div class="card" id="card3"></div>
-                        </div>
-                    `;
-                    setTimeout(() => {
-                        initMap();
-                        searchHealthcare();
-                    }, 0);
-                    break
-        
-                case 'employment-resources':
-                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                    section.innerHTML = `
-                        <h2>Employment Resources</h2>
-                        <p><span class="highlight-text">Enter your location to find employment resources near you:</span></p>
-                        <input type="text" id="address-input" placeholder="Enter street address">
-                        <button onclick="geocodeAddress()">Search</button>
-                        <div id="map"></div>
-                        <button onclick="clearMarkers()">Clear Markers</button>
-                        <!-- Add the card section here -->
-                        <div id="cards-container">
-                            <div class="card" id="card1"></div>
-                            <div class="card" id="card2"></div>
-                            <div class="card" id="card3"></div>
-                        </div>
-                    `;
-                    setTimeout(() => {
-                        initMap();
-                        searchEmploymentResources();
-                    }, 0);
-                    break;
+    switch(page) {
+        case 'home':
+            joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+            section.innerHTML = `
+                <div id="events-display">
+                    <h2>Upcoming Community Events</h2>
+                    <!-- Event cards will be appended here -->
+                </div>
+            `;
+            break;
+
+        case 'shelters':
+            joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+            section.innerHTML = `
+                <div class="white-text-section"> <!-- Added wrapper with the class -->
+                    <h2>Shelters</h2>
+                    <p><span class="highlight-text">Enter your location to find shelters near you:</span></p>
+                    <input type="text" id="address-input" placeholder="Enter street address">
+                    <button onclick="geocodeAddress()">Search</button>
+                    <div id="map"></div>
+                    <button onclick="clearMarkers()">Clear Markers</button>
+                    <div id="cards-container">
+                        <div class="card" id="card1"></div>
+                        <div class="card" id="card2"></div>
+                        <div class="card" id="card3"></div>
+                    </div>
+                </div>
+            `;
+            setTimeout(() => {
+                initMap();
+                searchShelters();
+            }, 0);
+            break;
+
+        case 'food-banks':
+            joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+            section.innerHTML = `
+                <div class="white-text-section"> <!-- Added wrapper with the class -->
+                    <h2>Food Banks</h2>
+                    <p><span class="highlight-text">Enter your location to find food banks near you:</span></p>
+                    <input type="text" id="address-input" placeholder="Enter street address">
+                    <button onclick="geocodeAddress()">Search</button>
+                    <div id="map"></div>
+                    <button onclick="clearMarkers()">Clear Markers</button>
+                    <div id="cards-container">
+                        <div class="card" id="card1"></div>
+                        <div class="card" id="card2"></div>
+                        <div class="card" id="card3"></div>
+                    </div>
+                </div>
+            `;
+            setTimeout(() => {
+                initMap();
+                searchFoodBanks();
+            }, 0);
+            break;
+
+        case 'healthcare':
+            joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+            section.innerHTML = `
+                <div class="white-text-section"> <!-- Added wrapper with the class -->
+                    <h2>Healthcare</h2>
+                    <p><span class="highlight-text">Enter your location to find healthcare services near you:</span></p>
+                    <input type="text" id="address-input" placeholder="Enter street address">
+                    <button onclick="geocodeAddress()">Search</button>
+                    <div id="map"></div>
+                    <button onclick="clearMarkers()">Clear Markers</button>
+                    <div id="cards-container">
+                        <div class="card" id="card1"></div>
+                        <div class="card" id="card2"></div>
+                        <div class="card" id="card3"></div>
+                    </div>
+                </div>
+            `;
+            setTimeout(() => {
+                initMap();
+                searchHealthcare();
+            }, 0);
+            break;
+
+        case 'employment-resources':
+            joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+            section.innerHTML = `
+                <div class="white-text-section"> <!-- Added wrapper with the class -->
+                    <h2>Employment Resources</h2>
+                    <p><span class="highlight-text">Enter your location to find employment resources near you:</span></p>
+                    <input type="text" id="address-input" placeholder="Enter street address">
+                    <button onclick="geocodeAddress()">Search</button>
+                    <div id="map"></div>
+                    <button onclick="clearMarkers()">Clear Markers</button>
+                    <div id="cards-container">
+                        <div class="card" id="card1"></div>
+                        <div class="card" id="card2"></div>
+                        <div class="card" id="card3"></div>
+                    </div>
+                </div>
+            `;
+            setTimeout(() => {
+                initMap();
+                searchEmploymentResources();
+            }, 0);
+            break;
 
                     case 'accessibility':
                     joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
@@ -624,47 +638,41 @@
                     `;
                     break;
                 
-                case 'community-events':
+
+                    case 'community-events':
                     if (isLoggedIn) {
                         section.innerHTML = `
-                            <h2>Community Events</h2>
-                            <!-- Event submission form for logged-in users -->
-                            <div id="events-form">
-                                <h2>Want to contribute?</h2>
-                                <h2>Submit a Community Event!</h2>
-                                <input type="text" id="event-name" placeholder="Event Name" required>
-                                <input type="date" id="event-date" required>
-                                <input type="text" id="event-location" placeholder="Event Location" required>
-                                <textarea id="event-description" placeholder="Event Description" required></textarea>
-                                <button onclick="submitEvent()">Submit Event</button>
+                            <div class="white-text-section"> <!-- Added wrapper with the class -->
+                                <h2>Community Events</h2>
+                                <!-- Event submission form for logged-in users -->
+                                <div id="events-form">
+                                    <h2>Want to contribute?</h2>
+                                    <h2>Submit a Community Event!</h2>
+                                    <input type="text" id="event-name" placeholder="Event Name" required>
+                                    <input type="date" id="event-date" required>
+                                    <input type="text" id="event-location" placeholder="Event Location" required>
+                                    <textarea id="event-description" placeholder="Event Description" required></textarea>
+                                    <button onclick="submitEvent()">Submit Event</button>
+                                </div>
                             </div>
                         `;
                     } else {
                         section.innerHTML = `
-                            <h2>Community Events</h2>
-                            <p>Please log in to submit community events.</p>
-                            <div id="community-events-login-form" class="form-container">
-                                <h2>Login</h2>
-                                <input type="email" id="community-events-login-email" placeholder="Email">
-                                <input type="password" id="community-events-login-password" placeholder="Password">
-                                <button onclick="login()">Login</button>
-                                <p><a href="#" onclick="showForm('register-form')">Create an Account</a></p>
-                                <p><a href="#" onclick="showForm('forgot-password-form')">Forgot Password?</a></p>
+                            <div class="white-text-section"> <!-- Added wrapper with the class -->
+                                <h2>Community Events</h2>
+                                <p class="highlight-text">Please log in to submit community events.</p> <!-- Highlighted text -->
+                                <div id="community-events-login-form" class="form-container">
+                                    <h2>Login</h2>
+                                    <input type="email" id="community-events-login-email" placeholder="Email">
+                                    <input type="password" id="community-events-login-password" placeholder="Password">
+                                    <button onclick="login()">Login</button>
+                                    <p><a href="#" onclick="showForm('register-form')">Create an Account</a></p>
+                                    <p><a href="#" onclick="showForm('forgot-password-form')">Forgot Password?</a></p>
+                                </div>
                             </div>
                         `;
                     }
                     break;
-                                
-        
-                default:
-                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                    section.innerHTML = `
-                        <div id="events-display">
-                            <h2>Upcoming Community Events</h2>
-                            <!-- Event cards will be appended here -->
-                        </div>
-                    `;
-                break;
 
             }
         }
