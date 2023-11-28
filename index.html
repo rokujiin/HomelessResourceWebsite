@@ -316,9 +316,32 @@
             color: black;
         }
 
+        .neutral-palette #main-background {
+            background-color: #808080;
+            background-image: none;
+            color: white;
+        }
         
+        .neutral-palette header,
+        .neutral-palette #main-header-link,
+        .neutral-palette #join-us-btn {
+            background-color: #E4D69F;
+            color: rgb(43, 38, 38);
+        }
         
+        .neutral-palette nav ul {
+            background-color: #b1c58a;
+            color: black;
+        }
         
+        .neutral-palette nav a {
+            color: rgb(43, 38, 38);
+        }
+        
+        .neutral-palette button {
+            background-color:#28557f;
+        }
+
     </style>
 </head>
 
@@ -612,9 +635,10 @@ function loadPage(page) {
                         <button onclick="adjustTextSize('larger')">Larger Text</button>
                         <button onclick="adjustTextSize('smaller')">Smaller Text</button>
                         <button onclick="adjustContrast()">High Contrast</button>
-                        <!-- Add other accessibility features as needed -->
-                    `;
-                    break;
+                        <button onclick="adjustColor()">Neutral Palette</button>
+                    </div>
+                `;
+                break;
         
                     case 'contact':
                     joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
@@ -933,7 +957,12 @@ function loadPage(page) {
         
         function adjustContrast() {
             document.body.classList.toggle('high-contrast');
-        }        
+        }
+
+        function adjustColor() {
+            document.body.classList.toggle('neutral-palette');
+        }
+        
         
         function submitFeedback() {
             const feedback = document.getElementById('feedback').value;
