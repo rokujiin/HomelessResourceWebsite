@@ -712,17 +712,30 @@ function loadPage(page) {
             }
         }
 
+        function validateEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+
         function submitEvent() {
             // Get form values
             const eventName = document.getElementById('event-name').value;
             const eventDate = document.getElementById('event-date').value;
+            const eventEmail = document.getElementById('event-email').value; 
             const eventLocation = document.getElementById('event-location').value;
             const eventDescription = document.getElementById('event-description').value;
+        
+            // Validate email address before submitting
+            if (!validateEmail(eventEmail)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
         
             // Create a JSON object
             const eventData = {
                 eventName: eventName,
                 eventDate: eventDate,
+                eventEmail: eventEmail,
                 eventLocation: eventLocation,
                 eventDescription: eventDescription
             };
@@ -733,16 +746,39 @@ function loadPage(page) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(eventData),  // Convert the JSON object to a string
+                body: JSON.stringify(eventData)
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    // Handle non-200 responses
+                    return response.text().then(text => { throw new Error(text || "Server responded with an error") });
+                }
+                return response.json();
+            })
             .then(data => {
                 console.log(data);
                 clearFormInputs(); // Clear form inputs after submitting an event
-            })
-            .catch((error) => console.error('Error:', error));
-        }
         
+                // Send confirmation email using SMTPJS
+                return Email.send({
+                    SecureToken: "9bc7082a-b6ed-461c-b511-1ccf63032bbc", 
+                    To: eventEmail,
+                    From: "aserr748@gmail.com", 
+                    Subject: "Event Submission Confirmation",
+                    Body: `Thank you for submitting your event '${eventName}'. We will review it shortly.`
+                });
+            })
+            .then(message => {
+                alert("Confirmation email sent successfully");
+                // Optional: additional success handling
+            })
+            .catch((error) => {
+                // Handle both fetch errors and SMTPJS errors
+                console.error('Error:', error);
+                alert('Failed to submit the event or send confirmation email. Please try again.');
+            });
+        }
+              
         function startPollingForEvents() {
             // Set up interval to poll every 10 seconds (adjust time as needed)
             setInterval(fetchAndDisplayEvents, 500); // 500 milliseconds = .5 seconds
@@ -1040,7 +1076,9 @@ function loadPage(page) {
     </script>
     <!-- Google Maps API at the bottom to ensure page is loaded before everything executes -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places,geometry&callback=initMap"></script>
-    
+    <!--Email API (manages sending emails to users)-->
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+
     <footer>
         <ul id="footer-links">
             <li><a href="#" onclick="loadPage('accessibility'); return false;">Accessibility</a></li>
