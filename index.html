@@ -312,9 +312,36 @@
             filter: invert(100%); /* Inverts the color of the content */
         }
 
+        .black-text h2 {
+            color: black;
+        }
+
+        .neutral-palette #main-background {
+            background-color: #808080;
+            background-image: none;
+            color: white;
+        }
         
+        .neutral-palette header,
+        .neutral-palette #main-header-link,
+        .neutral-palette #join-us-btn {
+            background-color: #E4D69F;
+            color: rgb(43, 38, 38);
+        }
         
+        .neutral-palette nav ul {
+            background-color: #b1c58a;
+            color: black;
+        }
         
+        .neutral-palette nav a {
+            color: rgb(43, 38, 38);
+        }
+        
+        .neutral-palette button {
+            background-color:#28557f;
+        }
+
     </style>
 </head>
 
@@ -486,31 +513,31 @@
         }        
         // Load the page content based on the page name, will be called when
         // the user clicks on a nav link
-        function loadPage(page) {
-            const joinUsBtn = document.getElementById('join-us-btn'); // Get the join us button
-            const section = document.querySelector('section');
-          
-            if (page === 'community-events') {
-              joinUsBtn.style.display = 'none'; // Hide the button
-            } else {
-              joinUsBtn.style.display = 'block'; // Show the button for all other pages
-            }
-          
-            switch (page) {
-              case 'home':
-                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                section.innerHTML = `
-                  <div id="events-display">
+function loadPage(page, callback) {
+    const joinUsBtn = document.getElementById('join-us-btn'); // Get the join us button
+    const section = document.querySelector('section');
+
+    if (page === 'community-events') {
+        joinUsBtn.style.display = 'none'; // Hide the button
+    } else {
+        joinUsBtn.style.display = 'block'; // Show the button for all other pages
+    }
+
+    switch(page) {
+        case 'home':
+            joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+            section.innerHTML = `
+                <div id="events-display">
                     <h2>Upcoming Community Events</h2>
                     <!-- Event cards will be appended here -->
-                  </div>
-                `;
-                break;
-          
-              case 'shelters':
-                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                section.innerHTML = `
-                  <div class="white-text-section"> <!-- Added wrapper with the class -->
+                </div>
+            `;
+            break;
+
+        case 'shelters':
+            joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+            section.innerHTML = `
+                <div class="white-text-section"> <!-- Added wrapper with the class -->
                     <h2>Shelters</h2>
                     <p><span class="highlight-text">Enter your location to find shelters near you:</span></p>
                     <input type="text" id="address-input" placeholder="Enter street address">
@@ -518,22 +545,22 @@
                     <div id="map"></div>
                     <button onclick="clearMarkers()">Clear Markers</button>
                     <div id="cards-container">
-                      <div class="card" id="card1"></div>
-                      <div class="card" id="card2"></div>
-                      <div class="card" id="card3"></div>
+                        <div class="card" id="card1"></div>
+                        <div class="card" id="card2"></div>
+                        <div class="card" id="card3"></div>
                     </div>
-                  </div>
-                `;
-                setTimeout(() => {
-                  initMap();
-                  searchShelters();
-                }, 0);
-                break;
-          
-              case 'food-banks':
-                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                section.innerHTML = `
-                  <div class="white-text-section"> <!-- Added wrapper with the class -->
+                </div>
+            `;
+            setTimeout(() => {
+                initMap();
+                searchShelters();
+            }, 0);
+            break;
+
+        case 'food-banks':
+            joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+            section.innerHTML = `
+                <div class="white-text-section"> <!-- Added wrapper with the class -->
                     <h2>Food Banks</h2>
                     <p><span class="highlight-text">Enter your location to find food banks near you:</span></p>
                     <input type="text" id="address-input" placeholder="Enter street address">
@@ -541,22 +568,22 @@
                     <div id="map"></div>
                     <button onclick="clearMarkers()">Clear Markers</button>
                     <div id="cards-container">
-                      <div class="card" id="card1"></div>
-                      <div class="card" id="card2"></div>
-                      <div class="card" id="card3"></div>
+                        <div class="card" id="card1"></div>
+                        <div class="card" id="card2"></div>
+                        <div class="card" id="card3"></div>
                     </div>
-                  </div>
-                `;
-                setTimeout(() => {
-                  initMap();
-                  searchFoodBanks();
-                }, 0);
-                break;
-          
-              case 'healthcare':
-                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                section.innerHTML = `
-                  <div class="white-text-section"> <!-- Added wrapper with the class -->
+                </div>
+            `;
+            setTimeout(() => {
+                initMap();
+                searchFoodBanks();
+            }, 0);
+            break;
+
+        case 'healthcare':
+            joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+            section.innerHTML = `
+                <div class="white-text-section"> <!-- Added wrapper with the class -->
                     <h2>Healthcare</h2>
                     <p><span class="highlight-text">Enter your location to find healthcare services near you:</span></p>
                     <input type="text" id="address-input" placeholder="Enter street address">
@@ -564,22 +591,22 @@
                     <div id="map"></div>
                     <button onclick="clearMarkers()">Clear Markers</button>
                     <div id="cards-container">
-                      <div class="card" id="card1"></div>
-                      <div class="card" id="card2"></div>
-                      <div class="card" id="card3"></div>
+                        <div class="card" id="card1"></div>
+                        <div class="card" id="card2"></div>
+                        <div class="card" id="card3"></div>
                     </div>
-                  </div>
-                `;
-                setTimeout(() => {
-                  initMap();
-                  searchHealthcare();
-                }, 0);
-                break;
-          
-              case 'employment-resources':
-                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                section.innerHTML = `
-                  <div class="white-text-section"> <!-- Added wrapper with the class -->
+                </div>
+            `;
+            setTimeout(() => {
+                initMap();
+                searchHealthcare();
+            }, 0);
+            break;
+
+        case 'employment-resources':
+            joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+            section.innerHTML = `
+                <div class="white-text-section"> <!-- Added wrapper with the class -->
                     <h2>Employment Resources</h2>
                     <p><span class="highlight-text">Enter your location to find employment resources near you:</span></p>
                     <input type="text" id="address-input" placeholder="Enter street address">
@@ -587,96 +614,107 @@
                     <div id="map"></div>
                     <button onclick="clearMarkers()">Clear Markers</button>
                     <div id="cards-container">
-                      <div class="card" id="card1"></div>
-                      <div class="card" id="card2"></div>
-                      <div class="card" id="card3"></div>
+                        <div class="card" id="card1"></div>
+                        <div class="card" id="card2"></div>
+                        <div class="card" id="card3"></div>
                     </div>
-                  </div>
-                `;
-                setTimeout(() => {
-                  initMap();
-                  searchEmploymentResources();
-                }, 0);
-                break;
-          
-              case 'accessibility':
-                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                section.innerHTML = `
-                  <div class="enhanced-readability">
-                    <h2>Accessibility Options</h2>
-                    <p>Adjust the website settings for better accessibility:</p>
-                    <button onclick="adjustTextSize('larger')">Larger Text</button>
-                    <button onclick="adjustTextSize('smaller')">Smaller Text</button>
-                    <button onclick="adjustContrast()">High Contrast</button>
-                    <!-- Add other accessibility features as needed -->
-                  </div>
-                `;
-                break;
-          
-              case 'contact':
-                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                section.innerHTML = `
-                  <div class="enhanced-readability">
-                    <h2>Contact Us</h2>
-                    <p>Feel free to reach out to us:</p>
-                    <p>Email: <span id="contact-email" style="cursor:pointer;color:blue;">triplepjarm@gmail.com</span></p>
-                    <p>Facebook: <span id="contact-facebook" style="cursor:pointer;color:blue;">Triple PJarm</span></p>
-                  </div>
-                `;
-                break;
-          
-              case 'feedback':
-                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                section.innerHTML = `
-                  <div class="enhanced-readability">
-                    <h2>Feedback</h2>
-                    <p>We appreciate your feedback to improve our website:</p>
-                    <form id="feedback-form" onsubmit="submitFeedback(); return false;">
-                      <label for="feedback">Your Feedback:</label>
-                      <textarea id="feedback" name="feedback" required></textarea>
-                      <button type="submit">Submit Feedback</button>
-                    </form>
-                  </div>
-                `;
-                break;
-          
-              case 'community-events':
-                if (isLoggedIn) {
-                  section.innerHTML = `
-                    <div class="white-text-section">
-                      <h2>Community Events</h2>
-                      <!-- Event submission form for logged-in users -->
-                      <div id="events-form" class="black-text"> <!-- Added class -->
-                        <h2>Want to contribute?</h2>
-                        <h2>Submit a Community Event!</h2>
-                        <input type="text" id="event-name" placeholder="Event Name" required>
-                        <input type="date" id="event-date" required>
-                        <input type="text" id="event-location" placeholder="Event Location" required>
-                        <textarea id="event-description" placeholder="Event Description" required></textarea>
-                        <button onclick="submitEvent()">Submit Event</button>
-                      </div>
+                </div>
+            `;
+            setTimeout(() => {
+                initMap();
+                searchEmploymentResources();
+            }, 0);
+            break;
+
+                    case 'accessibility':
+                    joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+                    section.innerHTML = `
+                    <div class="enhanced-readability">
+                        <h2>Accessibility Options</h2>
+                        <p>Adjust the website settings for better accessibility:</p>
+                        <button onclick="adjustTextSize('larger')">Larger Text</button>
+                        <button onclick="adjustTextSize('smaller')">Smaller Text</button>
+                        <button onclick="adjustContrast()">High Contrast</button>
+                        <button onclick="adjustColor()">Neutral Palette</button>
                     </div>
-                  `;
-                } else {
-                  section.innerHTML = `
-                    <div class="white-text-section">
-                      <h2>Community Events</h2>
-                      <p class="highlight-text">Please log in to submit community events.</p>
-                      <div id="community-events-login-form" class="form-container">
-                        <h2>Login</h2>
-                        <input type="email" id="community-events-login-email" placeholder="Email">
-                        <input type="password" id="community-events-login-password" placeholder="Password">
-                        <button onclick="login()">Login</button>
-                        <p><a href="#" onclick="showForm('register-form')">Create an Account</a></p>
-                        <p><a href="#" onclick="showForm('forgot-password-form')">Forgot Password?</a></p>
-                      </div>
-                    </div>
-                  `;
-                }
+                `;
                 break;
+        
+                    case 'contact':
+                    joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+                    section.innerHTML = `
+                    <div class="enhanced-readability">
+                        <h2>Contact Us</h2>
+                        <p>Feel free to reach out to us:</p>
+                        <p>Email: <span id="contact-email" style="cursor:pointer;color:blue;">triplepjarm@gmail.com</span></p>
+                        <p>Facebook: <span id="contact-facebook" style="cursor:pointer;color:blue;">Triple PJarm</span></p>
+                    </div>
+                    `;
+                    break;
+        
+                case 'feedback':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+                    section.innerHTML = `
+                    <div class="enhanced-readability">
+                        <h2>Feedback</h2>
+                        <p>We appreciate your feedback to improve our website:</p>
+                        <form id="feedback-form" onsubmit="submitFeedback(); return false;">
+                            <label for="feedback">Your Feedback:</label>
+                            <textarea id="feedback" name="feedback" required></textarea>
+                            <button type="submit">Submit Feedback</button>
+                        </form>
+                    `;
+                    break;
+                
+
+                    case 'community-events':
+                    if (isLoggedIn) {
+                        section.innerHTML = `
+                            <div class="white-text-section">
+                                <h2>Community Events</h2>
+                                <!-- Event submission form for logged-in users -->
+                                <div id="events-form" class="black-text"> <!-- Added class -->
+                                    <h2>Want to contribute?</h2>
+                                    <h2>Submit a Community Event!</h2>
+                                    <input type="text" id="event-name" placeholder="Event Name" required>
+                                    <input type="date" id="event-date" required>
+                                    <input type="text" id="event-location" placeholder="Event Location" required>
+                                    <textarea id="event-description" placeholder="Event Description" required></textarea>
+                                    <button onclick="submitEvent()">Submit Event</button>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        section.innerHTML = `
+                            <div class="white-text-section">
+                                <h2>Community Events</h2>
+                                <p class="highlight-text">Please log in to submit community events.</p>
+                                <div id="community-events-login-form" class="form-container">
+                                    <h2>Login</h2>
+                                    <input type="email" id="community-events-login-email" placeholder="Email">
+                                    <input type="password" id="community-events-login-password" placeholder="Password">
+                                    <button onclick="login()">Login</button>
+                                    <p><a href="#" onclick="showForm('register-form')">Create an Account</a></p>
+                                    <p><a href="#" onclick="showForm('forgot-password-form')">Forgot Password?</a></p>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    if (callback && typeof callback === 'function') {
+                        callback();
+                    }
+                    break;
+
             }
-          }
-          
+        }
+
+        function initializeEventForm() {
+            // Get the submit button from the form
+            var submitButton = document.getElementById('event-submit-button');
+            if (submitButton) {
+                submitButton.onclick = submitEvent; // Attach the submitEvent function to the onclick event
+            }
+        }
         
         // Clear the cards
         function clearCards() {
@@ -685,17 +723,30 @@
             }
         }
 
+        function validateEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+
         function submitEvent() {
             // Get form values
             const eventName = document.getElementById('event-name').value;
             const eventDate = document.getElementById('event-date').value;
+            const eventEmail = document.getElementById('event-email').value; 
             const eventLocation = document.getElementById('event-location').value;
             const eventDescription = document.getElementById('event-description').value;
+        
+            // Validate email address before submitting
+            if (!validateEmail(eventEmail)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
         
             // Create a JSON object
             const eventData = {
                 eventName: eventName,
                 eventDate: eventDate,
+                eventEmail: eventEmail,
                 eventLocation: eventLocation,
                 eventDescription: eventDescription
             };
@@ -706,16 +757,39 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(eventData),  // Convert the JSON object to a string
+                body: JSON.stringify(eventData)
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    // Handle non-200 responses
+                    return response.text().then(text => { throw new Error(text || "Server responded with an error") });
+                }
+                return response.json();
+            })
             .then(data => {
                 console.log(data);
                 clearFormInputs(); // Clear form inputs after submitting an event
-            })
-            .catch((error) => console.error('Error:', error));
-        }
         
+                // Send confirmation email using SMTPJS
+                return Email.send({
+                    SecureToken: "9bc7082a-b6ed-461c-b511-1ccf63032bbc", 
+                    To: eventEmail,
+                    From: "aserr748@gmail.com", 
+                    Subject: "Event Submission Confirmation",
+                    Body: `Thank you for submitting your event '${eventName}'. We will review it shortly.`
+                });
+            })
+            .then(message => {
+                alert("Confirmation email sent successfully");
+                // Optional: additional success handling
+            })
+            .catch((error) => {
+                // Handle both fetch errors and SMTPJS errors
+                console.error('Error:', error);
+                alert('Failed to submit the event or send confirmation email. Please try again.');
+            });
+        }
+              
         function startPollingForEvents() {
             // Set up interval to poll every 10 seconds (adjust time as needed)
             setInterval(fetchAndDisplayEvents, 500); // 500 milliseconds = .5 seconds
@@ -895,7 +969,6 @@
         
         function resetPassword() {
             var email;
-            const email = document.getElementById('reset-password-email').value;
         
             // Check which reset password form is currently active
             if (document.getElementById('forgot-password-form').style.display !== 'none') {
@@ -903,8 +976,6 @@
             } else {
                 email = document.getElementById('community-events-forgot-password-email').value;
             }
-
-            alert(`A password reset link has been sent to ${email}. Check your email to reset your password.`);
         
             // Add logic for password reset using the email variable
             // ...
@@ -933,7 +1004,12 @@
         
         function adjustContrast() {
             document.body.classList.toggle('high-contrast');
-        }        
+        }
+
+        function adjustColor() {
+            document.body.classList.toggle('neutral-palette');
+        }
+        
         
         function submitFeedback() {
             const feedback = document.getElementById('feedback').value;
@@ -1004,6 +1080,8 @@
             loadPage('home');
             startPollingForEvents();
             resizeImagesToFitCards(); // Resize images on page load
+            // Load the community-events page with the initializeEventForm callback
+            loadPage('community-events', initializeEventForm);
         };
                 
         window.onresize = resizeImagesToFitCards;
@@ -1011,7 +1089,9 @@
     </script>
     <!-- Google Maps API at the bottom to ensure page is loaded before everything executes -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places,geometry&callback=initMap"></script>
-    
+    <!--Email API (manages sending emails to users)-->
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+
     <footer>
         <ul id="footer-links">
             <li><a href="#" onclick="loadPage('accessibility'); return false;">Accessibility</a></li>
