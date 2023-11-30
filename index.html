@@ -419,9 +419,6 @@
         
 
     </style>
-
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&callback=initMap&libraries=places,geometry"></script>
-
 </head>
 
 <body>
@@ -497,9 +494,6 @@
         let isLoggedIn = false; // Set to true if user is logged in
         let markers = [];
         let map;
-        let infowindow = new google.maps.InfoWindow();
-        let activeSection = ''; // Initialize with a default value or empty string
-
         // this will intitiate the map right on Sacramento just as a starting point
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
@@ -529,6 +523,7 @@
             const service = new google.maps.places.PlacesService(map);
             const userLocation = map.getCenter();
             // Create info window when a marker is clicked
+            const infowindow = new google.maps.InfoWindow();
 
             service.nearbySearch({
                 location: userLocation,
@@ -562,46 +557,31 @@
             }
             // Create a marker for each place                
             function createMarker(place) {
-                try {
-                    // Validate if the place object has the necessary properties
-                    if (!place.geometry || !place.geometry.location) {
-                        throw new Error("Invalid place geometry data.");
+                const marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location
+                });
+                markers.push(marker);
+            
+                google.maps.event.addListener(marker, 'click', function() {
+                    let contentString = `<div><h3>${place.name}</h3><p>${place.vicinity}</p>`;
+            
+                    if (place.website) {
+                        contentString += `<p><a href="${place.website}" target="_blank">Visit Website</a></p>`;
                     }
             
-                    // Create a new marker
-                    const marker = new google.maps.Marker({
-                        map: map,
-                        position: place.geometry.location
-                    });
-                    markers.push(marker);
+                    if (place.url) {
+                        contentString += `<p><a href="${place.url}" target="_blank">View on Google Maps</a></p>`;
+                    }
             
-                    // Add a click listener to the marker
-                    google.maps.event.addListener(marker, 'click', function() {
-                        let contentString = `<div><h3>${place.name || 'No name available'}</h3>`;
-                        contentString += `<p>${place.vicinity || 'No address available'}</p>`;
+                    contentString += '</div>';
             
-                        // Append website URL if available
-                        if (place.website) {
-                            contentString += `<p><a href="${place.website}" target="_blank" rel="noopener noreferrer">Visit Website</a></p>`;
-                        }
-            
-                        // Append Google Maps URL if available
-                        if (place.url) {
-                            contentString += `<p><a href="${place.url}" target="_blank" rel="noopener noreferrer">View on Google Maps</a></p>`;
-                        }
-            
-                        contentString += '</div>';
-            
-                        // Set the content of the info window
-                        infowindow.setContent(contentString);
-                        infowindow.open(map, this);
-                    });
-                } catch (error) {
-                    console.error("Error creating marker:", error.message);
-                }
-            }              
+                    infowindow.setContent(contentString);
+                    infowindow.open(map, this);
+                });
+            }  
         }
-
+        
         // Clear all markers from the map
         function clearMarkers() {
             for(let i = 0; i < markers.length; i++) {
@@ -1240,7 +1220,8 @@ function loadPage(page, callback) {
         window.onresize = resizeImagesToFitCards;
     
     </script>
-
+    <!-- Google Maps API at the bottom to ensure page is loaded before everything executes -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places,geometry&callback=initMap"></script>
     <!--Email API (manages sending emails to users)-->
     <script src="https://smtpjs.com/v3/smtp.js"></script>
 
