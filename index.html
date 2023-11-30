@@ -589,6 +589,7 @@ function loadPage(page, callback) {
         case 'home':
             joinUsBtn.style.display = 'block'; // Show the join us button
             section.innerHTML = `
+            <div id="events-container">
                 <div class="background-text">
                     <div id="home-text">
                         <h2>Welcome!</h2>
@@ -597,6 +598,8 @@ function loadPage(page, callback) {
                         <p>At the moment, there seem to be no events posted. When there are, they will appear here.</p>
                     </div>
                 </div>
+            <div id="events-display"></div>
+            </div>
             `;
             break;
 
@@ -886,7 +889,7 @@ function loadPage(page, callback) {
         }
     
         function displayEvents(events) {
-            const eventsDisplay = document.getElementById('events-display');
+            const eventsDisplay = document.getElementById('events-container');
             eventsDisplay.innerHTML = ''; // Clear previous events if any
         
             events.forEach(event => {
