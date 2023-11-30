@@ -881,7 +881,11 @@ function loadPage(page, callback) {
             document.getElementById('event-location').value = '';
             document.getElementById('event-description').value = '';
         }
-        
+
+        function startPollingForEvents() {
+            // Set up interval to poll every .5 seconds (adjust time as needed)
+            setInterval(fetchAndDisplayEvents, 500); // 500 milliseconds = .5 seconds
+        }
     
         function displayEvents(events) {
             const eventsDisplay = document.getElementById('events-container');
