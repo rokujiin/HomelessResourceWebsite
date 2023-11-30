@@ -899,8 +899,8 @@ function loadPage(page, callback) {
         }
 
         function startPollingForEvents() {
-            // Set up interval to poll every 3 seconds (adjust time as needed)
-            setInterval(fetchAndDisplayEvents, 1500); // 500 milliseconds = .5 seconds
+            // Set up interval to poll every .5 seconds (adjust time as needed)
+            setInterval(fetchAndDisplayEvents, 500); // 500 milliseconds = .5 seconds
         }
 
         function fetchAndDisplayEvents() {
@@ -1194,11 +1194,11 @@ function loadPage(page, callback) {
     // Load the default page and resize images
         window.onload = function() {
             initMap(); // Now it's safe to call initMap
-            loadPage('home');
             startPollingForEvents();
             resizeImagesToFitCards(); // Resize images on page load
             // Load the community-events page with the initializeEventForm callback
             loadPage('community-events', initializeEventForm);
+            loadPage('home');
         };
                 
         window.onresize = resizeImagesToFitCards;
