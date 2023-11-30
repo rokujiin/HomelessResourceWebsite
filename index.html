@@ -899,8 +899,8 @@ function loadPage(page, callback) {
         }
 
         function startPollingForEvents() {
-            // Set up interval to poll every .5 seconds (adjust time as needed)
-            setInterval(fetchAndDisplayEvents, 500); // 500 milliseconds = .5 seconds
+            // Set up interval to poll every 3 seconds (adjust time as needed)
+            setInterval(fetchAndDisplayEvents, 1500); // 500 milliseconds = .5 seconds
         }
 
         function fetchAndDisplayEvents() {
