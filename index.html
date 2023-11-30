@@ -419,6 +419,11 @@
         
 
     </style>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&callback=initMap&libraries=places,geometry"></script>
+        <!--Email API (manages sending emails to users)-->
+    <script async defer src="https://smtpjs.com/v3/smtp.js"></script>
+
 </head>
 
 <body>
@@ -495,6 +500,7 @@
         let markers = [];
         let map;
         let infowindow = new google.maps.InfoWindow();
+        let activeSection = ''; // Initialize with a default value or empty string
 
         // this will intitiate the map right on Sacramento just as a starting point
         function initMap() {
@@ -1236,10 +1242,6 @@ function loadPage(page, callback) {
         window.onresize = resizeImagesToFitCards;
     
     </script>
-    <!-- Google Maps API at the bottom to ensure page is loaded before everything executes -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKGg3C-vgi0oAAOVbsRsiyRxUZyB_0sks&libraries=places,geometry&callback=initMap"></script>
-    <!--Email API (manages sending emails to users)-->
-    <script src="https://smtpjs.com/v3/smtp.js"></script>
 
     <footer>
         <ul id="footer-links">
