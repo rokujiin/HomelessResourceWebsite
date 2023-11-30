@@ -709,17 +709,17 @@ function loadPage(page, callback) {
                 `;
                 break;
         
-                    case 'contact':
-                    joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
-                    section.innerHTML = `
-                    <div class="enhanced-readability">
-                        <h2>Contact Us</h2>
-                        <p>Feel free to reach out to us:</p>
-                        <p>Email: <span id="contact-email" style="cursor:pointer;color:blue;">triplepjarm@gmail.com</span></p>
-                        <p>Facebook: <span id="contact-facebook" style="cursor:pointer;color:blue;">Triple PJarm</span></p>
-                    </div>
-                    `;
-                    break;
+                case 'contact':
+                joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
+                section.innerHTML = `
+                <div class="enhanced-readability">
+                    <h2>Contact Us</h2>
+                    <p>Feel free to reach out to us:</p>
+                    <p>Email: <a href="mailto:triplepjarm@gmail.com" style="color:blue;">triplepjarm@gmail.com</a></p>
+                    <p>Facebook: <a href="https://www.facebook.com/TriplePJarm" target="_blank" style="color:blue;">Triple PJarm</a></p>
+                </div>
+                `;
+                break;
         
                 case 'feedback':
                 joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
