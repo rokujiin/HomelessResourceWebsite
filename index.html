@@ -1017,7 +1017,7 @@ function loadPage(page, callback) {
             if (document.getElementById('login-form').style.display !== 'none') {
                 email = document.getElementById('login-email').value;
                 password = document.getElementById('login-password').value;
-            } else if (document.getElementById('community-events-login-form').value) {
+            } else if (document.getElementById('community-events-login-form').style.display !== 'none') {
                 email = document.getElementById('community-events-login-email').value;
                 password = document.getElementById('community-events-login-password').value;
             }
