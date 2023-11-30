@@ -494,6 +494,8 @@
         let isLoggedIn = false; // Set to true if user is logged in
         let markers = [];
         let map;
+        let infowindow = new google.maps.InfoWindow();
+
         // this will intitiate the map right on Sacramento just as a starting point
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
