@@ -430,7 +430,7 @@
             <h1><a id="main-header-link" href="#" onclick="loadPage('home'); return false;">Hornet Homeless Resource Platform</a></h1>
         </div>
         <p>Connecting you with essential resources and support services.</p>
-        <button id="join-us-btn" onclick="toggleLoginForm()">Don't have an account? Join us here! <span></span></button>
+        <button id="join-us-btn" onclick="loadPage('community-events')">Don't have an account? Join us here! <span></span></button>
     </header>
 
     <!-- Login Form -->
@@ -779,46 +779,55 @@ function loadPage(page, callback) {
                 `;
                 break;
             
-                
-                
                 case 'community-events':
-                    if (isLoggedIn) {
-                        section.innerHTML = `
-                            <div class="white-text-section">
-                                <h2>Community Events</h2>
-                                <!-- Event submission form for logged-in users -->
-                                <div id="events-form" class="black-text"> <!-- Added class -->
-                                    <h2>Want to contribute?</h2>
-                                    <h2>Submit a Community Event!</h2>
-                                    <input type="email" id="event-email" placeholder="Organizer Email" required>
-                                    <input type="text" id="event-name" placeholder="Event Name" required>
-                                    <input type="date" id="event-date" required>
-                                    <input type="text" id="event-location" placeholder="Event Location" required>
-                                    <textarea id="event-description" placeholder="Event Description" required></textarea>
-                                    <button onclick="submitEvent()">Submit Event</button>
-                                </div>
+                if (isLoggedIn) {
+                    section.innerHTML = `
+                        <div class="white-text-section">
+                            <h2>Community Events</h2>
+                            <!-- Event submission form for logged-in users -->
+                            <div id="events-form" class="black-text">
+                                <h2>Want to contribute?</h2>
+                                <h2>Submit a Community Event!</h2>
+                                <input type="email" id="event-email" placeholder="Organizer Email" required>
+                                <input type="text" id="event-name" placeholder="Event Name" required>
+                                <input type="date" id="event-date" required>
+                                <input type="text" id="event-location" placeholder="Event Location" required>
+                                <textarea id="event-description" placeholder="Event Description" required></textarea>
+                                <button onclick="submitEvent()">Submit Event</button>
                             </div>
-                        `;
-                    } else {
-                        section.innerHTML = `
-                            <div class="white-text-section">
-                                <h2>Community Events</h2>
-                                <p class="highlight-text">Please log in to submit community events.</p>
-                                <div id="community-events-login-form" class="form-container">
-                                    <h2>Login</h2>
-                                    <input type="email" id="community-events-login-email" placeholder="Email">
-                                    <input type="password" id="community-events-login-password" placeholder="Password">
-                                    <button onclick="login()">Login</button>
-                                    <p><a href="#" onclick="showForm('register-form')">Create an Account</a></p>
-                                    <p><a href="#" onclick="showForm('forgot-password-form')">Forgot Password?</a></p>
-                                </div>
+                        </div>
+                    `;
+                } else {
+                    section.innerHTML = `
+                        <div class="white-text-section">
+                            <h2>Community Events</h2>
+                            <p class="highlight-text">Please log in to view and submit community events.</p>
+                            <div class="form-container">
+                                <h2>Login</h2>
+                                <input type="email" id="community-events-login-email" placeholder="Email">
+                                <input type="password" id="community-events-login-password" placeholder="Password">
+                                <button onclick="login()">Login</button>
+                                <p><a href="#" onclick="showForm('community-events-register-form')">Create an Account</a></p>
+                                <p><a href="#" onclick="showForm('community-events-forgot-password-form')">Forgot Password?</a></p>
                             </div>
-                        `;
-                    }
-                    if (callback && typeof callback === 'function') {
-                        callback();
-                    }
-                break;
+                            <div id="community-events-register-form" class="form-container" style="display:none;">
+                                <h2>Register</h2>
+                                <input type="text" id="community-events-register-name" placeholder="Full Name">
+                                <input type="email" id="community-events-register-email" placeholder="Email">
+                                <input type="password" id="community-events-register-password" placeholder="Password">
+                                <button onclick="register()">Create Account</button>
+                                <p><a href="#" onclick="showForm('community-events-login-form')">Already have an account? Login</a></p>
+                            </div>
+                            <div id="community-events-forgot-password-form" class="form-container" style="display:none;">
+                                <h2>Forgot Password</h2>
+                                <input type="email" id="community-events-forgot-password-email" placeholder="Email">
+                                <button onclick="resetPassword()">Reset Password</button>
+                                <p><a href="#" onclick="showForm('community-events-login-form')">Back to Login</a></p>
+                            </div>
+                        </div>
+                    `;
+                }
+                break;            
 
             }
         }
