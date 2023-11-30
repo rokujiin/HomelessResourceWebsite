@@ -557,31 +557,46 @@
             }
             // Create a marker for each place                
             function createMarker(place) {
-                const marker = new google.maps.Marker({
-                    map: map,
-                    position: place.geometry.location
-                });
-                markers.push(marker);
-            
-                google.maps.event.addListener(marker, 'click', function() {
-                    let contentString = `<div><h3>${place.name}</h3><p>${place.vicinity}</p>`;
-            
-                    if (place.website) {
-                        contentString += `<p><a href="${place.website}" target="_blank">Visit Website</a></p>`;
+                try {
+                    // Validate if the place object has the necessary properties
+                    if (!place.geometry || !place.geometry.location) {
+                        throw new Error("Invalid place geometry data.");
                     }
             
-                    if (place.url) {
-                        contentString += `<p><a href="${place.url}" target="_blank">View on Google Maps</a></p>`;
-                    }
+                    // Create a new marker
+                    const marker = new google.maps.Marker({
+                        map: map,
+                        position: place.geometry.location
+                    });
+                    markers.push(marker);
             
-                    contentString += '</div>';
+                    // Add a click listener to the marker
+                    google.maps.event.addListener(marker, 'click', function() {
+                        let contentString = `<div><h3>${place.name || 'No name available'}</h3>`;
+                        contentString += `<p>${place.vicinity || 'No address available'}</p>`;
             
-                    infowindow.setContent(contentString);
-                    infowindow.open(map, this);
-                });
-            }  
+                        // Append website URL if available
+                        if (place.website) {
+                            contentString += `<p><a href="${place.website}" target="_blank" rel="noopener noreferrer">Visit Website</a></p>`;
+                        }
+            
+                        // Append Google Maps URL if available
+                        if (place.url) {
+                            contentString += `<p><a href="${place.url}" target="_blank" rel="noopener noreferrer">View on Google Maps</a></p>`;
+                        }
+            
+                        contentString += '</div>';
+            
+                        // Set the content of the info window
+                        infowindow.setContent(contentString);
+                        infowindow.open(map, this);
+                    });
+                } catch (error) {
+                    console.error("Error creating marker:", error.message);
+                }
+            }              
         }
-        
+
         // Clear all markers from the map
         function clearMarkers() {
             for(let i = 0; i < markers.length; i++) {
