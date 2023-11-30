@@ -527,9 +527,11 @@
 
             service.nearbySearch({
                 location: userLocation,
-                radius: '1000',    //distance to search in meters
-                keyword: keyword
+                radius: '1000',    // Distance to search in meters
+                keyword: keyword,
+                fields: ['name', 'geometry', 'vicinity', 'url', 'website']  // Request additional fields
             }, callback);
+            
             // Callback function to handle the results
             function callback(results, status) {
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -560,13 +562,26 @@
                     position: place.geometry.location
                 });
                 markers.push(marker);
-
+            
                 google.maps.event.addListener(marker, 'click', function() {
-                    infowindow.setContent(place.name);
+                    let contentString = `<div><h3>${place.name}</h3><p>${place.vicinity}</p>`;
+            
+                    if (place.website) {
+                        contentString += `<p><a href="${place.website}" target="_blank">Visit Website</a></p>`;
+                    }
+            
+                    if (place.url) {
+                        contentString += `<p><a href="${place.url}" target="_blank">View on Google Maps</a></p>`;
+                    }
+            
+                    contentString += '</div>';
+            
+                    infowindow.setContent(contentString);
                     infowindow.open(map, this);
                 });
-            }
+            }  
         }
+        
         // Clear all markers from the map
         function clearMarkers() {
             for(let i = 0; i < markers.length; i++) {
