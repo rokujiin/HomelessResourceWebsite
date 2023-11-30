@@ -405,7 +405,17 @@
             height: auto;
             display: block;
             margin: 0 auto;
-        }        
+        }
+        
+        .translucent-background {
+            background-color: rgba(255, 255, 255, 0.7); /* White background with 70% opacity */
+            border-radius: 10px; /* Optional, for rounded corners */
+            padding: 20px; /* Add some padding */
+            text-align: center; /* Center the text */
+            max-width: 80%; /* Control the width, adjust as needed */
+            margin: auto; /* Center the div */
+        }
+        
 
     </style>
 </head>
@@ -742,22 +752,17 @@ function loadPage(page, callback) {
                 break;
 
                 case 'feedback-submitted':
-                    section.innerHTML =`
-                        <div class="white-text-section">
+                section.innerHTML = `
+                    <div class="white-text-section">
+                        <div class="translucent-background">
                             <h2>Feedback Submitted</h2>
-                            <img src="Confetti.png" class="img-confeti"></div>
-                    `;
-                    break;
-
-                case 'feedback-submitted':
-                        section.innerHTML = `
-                            <div class="white-text-section">
-                                <h2>Feedback Submitted</h2>
-                                <img src="Confetti.png" class="img-confeti">
-                                <p>Thank you for your feedback! It's greatly appreciated.</p>
-                            </div>
-                        `;
-                    break;
+                            <img src="https://github.com/rokujiin/HomelessResourceWebsite/blob/rokujiin-patch-7/images/Confetti.png?raw=true" class="img-confeti" alt="Confetti">
+                            <p>Thank you for your feedback! It's greatly appreciated.</p>
+                        </div>
+                    </div>
+                `;
+                break;
+            
                 
                 
                 case 'community-events':
