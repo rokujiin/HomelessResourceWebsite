@@ -739,7 +739,7 @@ function loadPage(page, callback) {
                             <button type="submit">Submit Feedback</button>
                         </form>
                     `;
-                    break;
+                break;
 
                 case 'feedback-submitted':
                     section.innerHTML =`
@@ -748,8 +748,18 @@ function loadPage(page, callback) {
                             <img src="Confetti.png" class="img-confeti"></div>
                     `;
                     break;
-                
 
+                case 'feedback-submitted':
+                        section.innerHTML = `
+                            <div class="white-text-section">
+                                <h2>Feedback Submitted</h2>
+                                <img src="Confetti.png" class="img-confeti">
+                                <p>Thank you for your feedback! It's greatly appreciated.</p>
+                            </div>
+                        `;
+                    break;
+                
+                
                 case 'community-events':
                     if (isLoggedIn) {
                         section.innerHTML = `
@@ -1126,7 +1136,8 @@ function loadPage(page, callback) {
                 }
             }).then(data => {
                 console.log('Feedback submitted:', data);
-                // Handle successful submission
+                // Redirect to feedback submitted page
+                loadPage('feedback-submitted');
             }).catch(error => {
                 console.error('Error:', error);
                 // Handle error
@@ -1135,6 +1146,7 @@ function loadPage(page, callback) {
             document.getElementById('feedback').value = ''; // Clear the form
             return false; // Prevent default form submission
         }
+        
         
         function resizeImagesToFitCards() {
             const cards = document.querySelectorAll('.event-card');
