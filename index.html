@@ -852,7 +852,7 @@ function loadPage(page, callback) {
             })
             .then(data => {
                 console.log(data);
-                clearFormInputs(); // Clear form inputs after submitting an event
+                clearEventFormInputs(); // Clear form inputs after submitting an event
         
                 // Send confirmation email using SMTPJS
                 return Email.send({
@@ -864,14 +864,22 @@ function loadPage(page, callback) {
                 });
             })
             .then(message => {
-                alert("Confirmation email sent successfully");
+                alert("Event information sent successfully!");
                 // Optional: additional success handling
             })
             .catch((error) => {
                 // Handle both fetch errors and SMTPJS errors
                 console.error('Error:', error);
-                alert('Failed to submit the event or send confirmation email. Please try again.');
+                alert('Failed to submit the event. Please try again.');
             });
+        }
+
+        function clearEventFormInputs() {
+            document.getElementById('event-name').value = '';
+            document.getElementById('event-date').value = '';
+            document.getElementById('event-email').value = ''; 
+            document.getElementById('event-location').value = '';
+            document.getElementById('event-description').value = '';
         }
         
     
