@@ -513,7 +513,7 @@
         }        
         // Load the page content based on the page name, will be called when
         // the user clicks on a nav link
-function loadPage(page) {
+function loadPage(page, callback) {
     const joinUsBtn = document.getElementById('join-us-btn'); // Get the join us button
     const section = document.querySelector('section');
 
@@ -700,8 +700,19 @@ function loadPage(page) {
                             </div>
                         `;
                     }
+                    if (callback && typeof callback === 'function') {
+                        callback();
+                    }
                     break;
 
+            }
+        }
+
+        function initializeEventForm() {
+            // Get the submit button from the form
+            var submitButton = document.getElementById('event-submit-button');
+            if (submitButton) {
+                submitButton.onclick = submitEvent; // Attach the submitEvent function to the onclick event
             }
         }
         
@@ -1069,6 +1080,8 @@ function loadPage(page) {
             loadPage('home');
             startPollingForEvents();
             resizeImagesToFitCards(); // Resize images on page load
+            // Load the community-events page with the initializeEventForm callback
+            loadPage('community-events', initializeEventForm);
         };
                 
         window.onresize = resizeImagesToFitCards;
