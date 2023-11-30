@@ -399,7 +399,13 @@
             max-width: 80%; /* Control the width, adjust as needed */
             margin: auto; /* Center the div */
         }
-        
+
+        .img-confeti {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }        
 
     </style>
 </head>
@@ -695,7 +701,7 @@ function loadPage(page, callback) {
             }, 0);
             break;
 
-                    case 'accessibility':
+                case 'accessibility':
                     joinUsBtn.style.display = 'block'; // Show the join us button for all other pages
                     section.innerHTML = `
                     <div class="enhanced-readability">
@@ -734,9 +740,17 @@ function loadPage(page, callback) {
                         </form>
                     `;
                     break;
+
+                case 'feedback-submitted':
+                    section.innerHTML =`
+                        <div class="white-text-section">
+                            <h2>Feedback Submitted</h2>
+                            <img src="Confetti.png" class="img-confeti"></div>
+                    `;
+                    break;
                 
 
-                    case 'community-events':
+                case 'community-events':
                     if (isLoggedIn) {
                         section.innerHTML = `
                             <div class="white-text-section">
@@ -772,7 +786,7 @@ function loadPage(page, callback) {
                     if (callback && typeof callback === 'function') {
                         callback();
                     }
-                    break;
+                break;
 
             }
         }
@@ -1086,8 +1100,6 @@ function loadPage(page, callback) {
             }
         }
         
-        
-        
         function submitFeedback() {
             const feedback = document.getElementById('feedback').value;
         
@@ -1114,7 +1126,7 @@ function loadPage(page, callback) {
             document.getElementById('feedback').value = ''; // Clear the form
             return false; // Prevent default form submission
         }
-
+        
         function resizeImagesToFitCards() {
             const cards = document.querySelectorAll('.event-card');
             cards.forEach(card => {
@@ -1126,13 +1138,13 @@ function loadPage(page, callback) {
                 });
             });
         }
-
+        
         function clearFormInputs() {
             document.querySelectorAll('.form-container input, .form-container textarea').forEach(input => {
                 input.value = '';
             });
         }
-
+        
         document.addEventListener('DOMContentLoaded', function() {
             const contactEmailSpan = document.getElementById('contact-email');
             const contactFacebookSpan = document.getElementById('contact-facebook');
@@ -1149,6 +1161,7 @@ function loadPage(page, callback) {
                 });
             }
         });
+        
         
         
     // Load the default page and resize images
