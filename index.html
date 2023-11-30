@@ -525,7 +525,6 @@
             const service = new google.maps.places.PlacesService(map);
             const userLocation = map.getCenter();
             // Create info window when a marker is clicked
-            const infowindow = new google.maps.InfoWindow();
 
             service.nearbySearch({
                 location: userLocation,
