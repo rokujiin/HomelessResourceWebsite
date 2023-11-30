@@ -886,6 +886,30 @@ function loadPage(page, callback) {
             // Set up interval to poll every .5 seconds (adjust time as needed)
             setInterval(fetchAndDisplayEvents, 500); // 500 milliseconds = .5 seconds
         }
+
+        function fetchAndDisplayEvents() {
+            const gcfUrl = 'https://us-west2-divine-clone-398400.cloudfunctions.net/function-2';
+            
+            fetch(gcfUrl)
+                .then(response => {
+                    // Check if the response is successful (status code 200)
+                    if (response.ok) {
+                        // Parse and return the JSON data
+                        return response.json();
+                    } else {
+                        // If there's an error, log it and return null
+                        console.error('Error fetching event data:', response.statusText);
+                        return null;
+                    }
+                })
+                .then(data => {
+                    // If there's data, display the events
+                    if (data) {
+                        displayEvents(data);
+                    }
+                })
+                .catch(error => console.error('Error fetching event data:', error));
+        }
     
         function displayEvents(events) {
             const eventsDisplay = document.getElementById('events-container');
