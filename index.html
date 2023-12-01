@@ -749,7 +749,7 @@ function loadPage(page, callback) {
                     <h2>Contact Us</h2>
                     <p>Feel free to reach out to us:</p>
                     <p>Email: <a href="mailto:triplepjarm@gmail.com" style="color:blue;">triplepjarm@gmail.com</a></p>
-                    <p>Facebook: <a href="https://www.facebook.com/people/Triple-Pjarm/pfbid02tUCCN2vLC2fU8BkAGaeEgeKD4aw4zsTkEEK96S8P2fW4NSzAxu9ZtfXuJr834DA6l/" target="_blank" style="color:blue;">Triple PJarm</a></p>
+                    <p>Facebook: <a href="https://www.facebook.com/TriplePJarm" target="_blank" style="color:blue;">Triple PJarm</a></p>
                 </div>
                 `;
                 break;
@@ -1011,16 +1011,8 @@ function loadPage(page, callback) {
         }
         
         function login() {
-            var email, password;
-        
-            // Check which login form is currently active
-            if (document.getElementById('login-form').style.display !== 'none') {
-                email = document.getElementById('login-email').value;
-                password = document.getElementById('login-password').value;
-            } else if (document.getElementById('community-events-login-form').style.display !== 'none') {
-                email = document.getElementById('community-events-login-email').value;
-                password = document.getElementById('community-events-login-password').value;
-            }
+            var email = document.getElementById('login-email').value;
+            var password = document.getElementById('login-password').value;
         
             // Optional: Add loading indicator or disable the login button here
         
