@@ -1011,55 +1011,44 @@ function loadPage(page, callback) {
         }
         
         function login() {
-            var email = document.getElementById('login-email').value;
-            var password = document.getElementById('login-password').value;
-        
-            // Optional: Add loading indicator or disable the login button here
-        
-            fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-1', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                // credentials: 'include', // Or 'same-origin' as required
-                body: JSON.stringify({ action: 'login', email: email, password: password })
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    // More detailed error based on status code
-                    switch(response.status) {
-                        case 401:
-                            throw new Error("Invalid credentials. Please check your email and password.");
-                        case 403:
-                            throw new Error("Access denied. You do not have permission to access this resource.");
-                        case 500:
-                            throw new Error("Server error. Please try again later.");
-                        default:
-                            throw new Error("An unexpected error occurred. Please try again.");
-                    }
-                }
-            })
-            .then(data => {
-                console.log("Response from GCF:", data);
-                if (data.message === 'Login successful') {
-                    alert('Logged in successfully');
-                    isLoggedIn = true;
-                    loadPage('community-events');
-                } else {
-                    alert('Login failed: ' + data.message);
-                    isLoggedIn = false;
-                }
-            })
-            .catch(error => {
-                console.error('Error during login:', error);
-                alert(error.message); // Display a user-friendly error message
-                isLoggedIn = false;
-            })
-            .finally(() => {
-                // Remove loading indicator or enable the login button here
-                // ...
-            });
+    var email = document.getElementById('login-email').value;
+    var password = document.getElementById('login-password').value;
+
+    // Log the captured values to ensure they are being correctly captured
+    console.log("Email: ", email);
+    console.log("Password: ", password);
+
+    // Ensure the URL in the fetch request is correct and points to your GCF endpoint for login
+    fetch('https://us-central1-divine-clone-398400.cloudfunctions.net/function-1', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'login', email: email, password: password })
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            // More detailed error based on status code
+            throw new Error("An error occurred during login: " + response.statusText);
         }
+    })
+    .then(data => {
+        console.log("Response from GCF:", data);
+        if (data.message === 'Login successful') {
+            alert('Logged in successfully');
+            isLoggedIn = true;
+            loadPage('community-events');
+        } else {
+            alert('Login failed: ' + data.message);
+            isLoggedIn = false;
+        }
+    })
+    .catch(error => {
+        console.error('Error during login:', error);
+        alert(error.message); // Display a user-friendly error message
+        isLoggedIn = false;
+    });
+}
 
 
         
@@ -1067,7 +1056,8 @@ function loadPage(page, callback) {
             var name, email, password;
         
             // Check which registration form is currently active
-            if (document.getElementById('register-form').style.display !== 'none') {
+            if
+                (document.getElementById('register-form').style.display !== 'none') {
                 name = document.getElementById('register-name').value;
                 email = document.getElementById('register-email').value;
                 password = document.getElementById('register-password').value;
